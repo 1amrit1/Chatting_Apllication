@@ -16,7 +16,6 @@ def home():
     return render_template('home.html')
 
 
-
 @app.route('/roomSelect', methods=['GET', 'POST'])
 def index():
     if (request.method == 'POST'):

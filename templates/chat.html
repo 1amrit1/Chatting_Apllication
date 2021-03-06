@@ -38,6 +38,18 @@
             }
         </script>
     <style>
+    body {
+  font-family: "Karla", sans-serif;
+  background: linear-gradient(to bottom, rgb(20, 20, 31,0.78), rgb(20, 20, 31,0.78)),url("https://images.pexels.com/photos/6238033/pexels-photo-6238033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  min-height: 100vh;
+  background-size:cover;
+  width:40%;
+  margin:auto;
+  opacity: 1;
+ }
+      #bodyDiv{
+        box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+      }
       #chat{
         border-radius:10%;
       }
@@ -48,17 +60,22 @@
         height: 15vh;
         border-radius : 15%;
       }
+      #chatwindow{
+        background-color : rgb(163, 163, 194);
+      }
     </style>
   </head>
 
   <body class="text-center">
-    
-    <div class="chatwindow">
-      <h2 >THE CHATTING APPLICATION</h2>
-      <h2>Room : {{session['room']}}</h2><br>
-      <textarea id="chat" cols="70" rows="10" disabled placeholder="No messages yet. Start one..."></textarea><br /><br />
+    <div class="chatwindow" id="chatAreaDiv">
+      <h2 style="color: rgb(255, 255, 255);font-family: 'Brush Script MT';">THE CHATTING APPLICATION</h2>
+      <h2 style="color: rgb(255, 255, 255);font-weight: bold;">Room : {{session['room']}}</h2><br>
+
+      <textarea id="chat" cols="70" rows="10" style="color: rgb(255, 255, 255);font-weight: bold;" disabled placeholder="No messages yet. Start one..."></textarea><br /><br />
       <input type="text" id="text" size="60" placeholder="Enter your message here" />
       <button type="button" id="send" class="btn btn-success">SEND</button><br /><br />
+      <center><button type="button" class="btn btn-secondary" >GET OLD CHATS</button></center><br /><br />
+
       <center><button type="button" class="btn btn-danger" onclick=leave_room()>Leave this Chat</button></center>
     </div>
   </body>
