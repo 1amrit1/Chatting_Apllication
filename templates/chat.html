@@ -36,6 +36,7 @@
                         return "Handler for .unload() called.";
                 });
             });
+
             function leave_room() {
                 socket.emit('left', {}, function() {
                     socket.disconnect();
@@ -93,7 +94,7 @@
 
     <textarea id="chat" cols="70" rows="10" style="color: rgb(255, 255, 255);font-weight: bold;" disabled
               placeholder="No messages yet. Start one..."></textarea><br/><br/>
-    <input type="text" id="text" size="60" placeholder="Enter your message here"/>
+    <input type="text"  id="text" size="60" placeholder="Enter your message here"/>
     <button type="button" id="send" class="btn btn-success">SEND</button>
     <br/><br/>
     <center>
