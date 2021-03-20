@@ -71,6 +71,8 @@ def text(message):
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
+    if(message['msg'] == ""):
+        return 
     emit('message', {'msg': session.get('username') + dtString+ ' : ' + message['msg']}, room=room)
 
 
