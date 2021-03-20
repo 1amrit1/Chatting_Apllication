@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
+from datetime import datetime
 
 app = Flask(__name__)
 app.debug = True
@@ -15,6 +16,9 @@ socketio = SocketIO(app, manage_session=False)
 def home():
     return render_template('home.html')
 
+@app.route('/signUp', methods=['GET', 'POST'])
+def signUp():
+    return render_template('signUp.html')
 
 @app.route('/roomSelect', methods=['GET', 'POST'])
 def index():
@@ -51,13 +55,23 @@ def chat():
 def join(message):
     room = session.get('room')
     join_room(room)
-    emit('status', {'msg':  session.get('username') + ' has entered the room.'}, room=room)
+    dt = datetime.now()
+    date = (dt.strftime("%x"))
+    hr = (dt.strftime("%H"))
+    min = (dt.strftime("%M"))
+    dtString = "[ "+date+" -> "+hr+" : "+min+" ]"
+    emit('status', {'msg':  session.get('username') + ' has entered the room at '+dtString}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
 def text(message):
     room = session.get('room')
-    emit('message', {'msg': session.get('username') + ' : ' + message['msg']}, room=room)
+    dt = datetime.now()
+    date = (dt.strftime("%x"))
+    hr = (dt.strftime("%H"))
+    min = (dt.strftime("%M"))
+    dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
+    emit('message', {'msg': session.get('username') + dtString+ ' : ' + message['msg']}, room=room)
 
 
 @socketio.on('left', namespace='/chat')
