@@ -58,7 +58,7 @@ def signUpNext():
             flash("password and confirm password doesn't match!", 'error')
             return redirect(url_for('signUp'))
         elif (
-                emailEntered == "" or passwordEntered == "" or confirmPasswordEntered == "" or securityQuestionEntered == "" or securityQuestionEntered == ""):
+                emailEntered == "" or passwordEntered == "" or confirmPasswordEntered == "" or securityQuestionEntered == "" or securityAnswerEntered == ""):
             flash("Fields cannot be empty!", 'error')
             return redirect(url_for('signUp'))
         elif(findUser({'email': emailEntered} )!= {}):
@@ -67,21 +67,8 @@ def signUpNext():
         else:
             userObj = {"email":emailEntered,"password":passwordEntered,"security_question":securityQuestionEntered,"security_answer":securityAnswerEntered}
             insertUser(userObj)
-            flash("New User Created!",'error')
+            flash("Your Id Has been Created. Welcome!",'error')
             return redirect(url_for('home'))
-
-
-
-
-
-
-        #     userInDb = findUser({'email': emailEntered})
-        #
-        # if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
-        #     return render_template('index.html')
-        # else:
-        #     flash("wrong email or password", 'error')
-        #     return redirect(url_for('home'))
 
     else:
 
