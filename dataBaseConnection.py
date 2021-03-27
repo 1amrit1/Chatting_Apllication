@@ -7,20 +7,28 @@ db = myclient['chatting_application']
 users = db.user_data
 messages = db.messages
 
-res = users.find()
-for i in res:
-    print(i)
+# res = users.find()
+# for i in res:
+#     print(i)
 
 def findUser(query):
     res = users.find(query)
-    return res
+    print(res)
+    k = {};
+    for i in res:
+        k = i
+        # print(i)
+    return k
+# print(findUser({'email': 'student@lambton.ca'}))
+
+
 def findMessage(query):
     res = messages.find(query)
     return res
 def insertUser(newUser):
     users.insert_one(newUser)
 def insertMessage(newMessage):
-    users.insert_one(newMessage)
+    messages.insert_one(newMessage)
 def updateUser(newUser):
     users.insert_one(newUser)
 
