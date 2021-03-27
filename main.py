@@ -2,16 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
-import pymongo
-conStr = "mongodb+srv://admin:qwerty123@cluster0.h7iox.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 app = Flask(__name__)
-# mongoDB connection
-myclient = pymongo.MongoClient(conStr)
-db = myclient.chatting_application
-msgsDB = db["messages"]
-usersDB = db["user_data"]
+# mongoDB connection############################
 
+
+##############################################
 app.debug = True
 app.config['SECRET_KEY'] = 'secret'
 app.config['SESSION_TYPE'] = 'filesystem'

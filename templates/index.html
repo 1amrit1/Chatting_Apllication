@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Login Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Template</title>
     <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <style>
+    <style>
       body {
   font-family: "Krona One", sans-serif;
   background: url("https://images.pexels.com/photos/3975677/pexels-photo-3975677.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
@@ -62,28 +62,54 @@
       border: 1px solid #000;
       background-color: #F2985A;
       color: #000; }
-  </style>
+
+      #room{
+        width : 40vw;
+        height : 7vh;
+        margin-bottom:1rem;
+        background-color : #e6ffff;
+        color : #602020;
+      }
+
+    </style>
 </head>
 <body>
-  <main class="items">
+<main class="items">
     <div class="container">
-      <div class="chat-login">
-          <div class="chat-body" style="text-align:center;">
-              <p class="login">Choose Room and Start Chat</p>
-              <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
-                  <div class="form1">
-                      <label for="username" class="sr-only">Username</label>
-                      <input type="username" name="username" id="username" class="form-control" placeholder="Username">
-                  </div>
-                  <div class="form2">
-                    <label for="room" class="sr-only">Room Name</label>
-                    <input type="room" name="room" id="room" class="form-control" placeholder="RoomNumber">
-                  </div>
-                <button class="btn btn-lg btn-primary btn-block" value="submit">Enter</button>
-              </form>
-          </div>
-      </div>
+        <div class="chat-login">
+            <div class="chat-body" style="text-align:center;">
+                <p class="login">Choose Room and Start Chat</p>
+                <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
+                    <div class="form1">
+                        <label for="username" class="sr-only">Username</label>
+                        <input type="username" name="username" id="username" class="form-control"
+                               placeholder="Username">
+                    </div>
+                    <select class="form-select" id="room" name="room" aria-label="Default select example">
+                        <option selected>SELECT THE ROOM</option>
+                        <option value="CSAT">CSAT</option>
+                        <option value="LAMBTON">LAMBTON</option>
+                        <option value="CANADA">CANADA</option>
+                        <option value="CODERS CLUB">CODERS CLUB</option>
+                        <option value="LEAGUE OF LEGENDS">LEAGUE OF LEGENDS</option>
+                        <option value="COUNTER STRIKE">COUNTER STRIKE</option>
+                        <option value="DOTA">DOTA</option>
+                        <option value="AGE OF EMPIRES">AGE OF EMPIRES</option>
+                        <option value="DRAMA CLUB">DRAMA CLUB</option>
+                        <option value="BASKETBALL TEAM">BASKETBALL TEAM</option>
+
+
+                    </select>
+
+<!--                    <div class="form2">-->
+<!--                        <label for="room" class="sr-only">Room Name</label>-->
+<!--                        <input type="room" name="room" id="room" class="form-control" placeholder="RoomNumber">-->
+<!--                    </div>-->
+                    <button class="btn btn-lg btn-primary btn-block" value="submit">Enter</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </main>
+</main>
 </body>
 </html>
