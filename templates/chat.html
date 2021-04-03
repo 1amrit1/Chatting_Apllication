@@ -27,11 +27,13 @@
         socket.on('status', function (data) {
           $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
           $('#chat').scrollTop($('#chat')[0].scrollHeight);
+          console.log(data.user);
         });
         socket.on('message', function (data) {
           //     if(session['username' ]== data.user){
           //        console.log("same user");
           //     }
+          //console.log(data.user)
           $('#chat').val($('#chat').val() + data.msg + '\n');
           $('#chat').scrollTop($('#chat')[0].scrollHeight);
         });
@@ -46,7 +48,6 @@
           return "Handler for .unload() called.";
         });
       });
-      console.log(session)
 
       function leave_room() {
         socket.emit('left', {}, function () {
@@ -111,6 +112,13 @@
       float: left;
       position: fixed;
     }
+    #userList{
+      color: rgb(49, 5, 5);
+      font-weight: bold;
+      margin-left: 5vw;
+      list-style: none;
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -131,7 +139,11 @@
     </h2><br>
     <div id="userNames">
       <h2>USERS</h2><hr><hr>
-      <ul id="userList"></ul>
+      <ul id="userList">
+        <li>amar</li>
+        <li>akbar</li>
+        <li>anthony</li>
+      </ul>
     </div>
     <textarea
       id="chat"

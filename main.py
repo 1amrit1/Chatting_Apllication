@@ -103,7 +103,7 @@ def join(message):
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString}, room=room)
+    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'user': session.get('username')}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
@@ -120,7 +120,7 @@ def text(message):
     msgObj = {'chat_room': room, 'message': msg, 'username': session.get('username')}
 
     emit('message',
-         {'msg': session.get('username') + dtString + ' : ' + message['msg'], 'user': session.get('username')},
+         {'msg': session.get('username') + dtString + ' : ' + message['msg']},
          room=room)
     insertMessage(msgObj)
 
