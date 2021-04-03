@@ -1,53 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>CHATTING APP</title>
-    <!--Link to CSS -->
-    <link href="../static/bootstrap.min.css" rel="stylesheet"/>
-    <link href="../static/style.css" rel="stylesheet"/>
+  <title>CHATTING
+    APP</title>
+  <!--Link to CSS -->
+  <!--    <link href="../static/bootstrap.min.css" rel="stylesheet"/>-->
+  <!--    <link href="../static/style.css" rel="stylesheet"/>-->
 
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"
-            integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA=="
-            crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf-8">
-            var socket;
-            $(document).ready(function(){
-                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
-                socket.on('connect', function() {
-                    socket.emit('join', {});
-                });
-                socket.on('status', function(data) {
-                    $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
-                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
-                });
-                socket.on('message', function(data) {
-<!--                    if(session['username' ]== data.user){-->
-<!--                        console.log("same user");-->
-<!--                    }-->
-                    $('#chat').val($('#chat').val() + data.msg + '\n');
-                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
-                });
-                $('#send').click(function(e) {
-                        text = $('#text').val();
+  <script
+    type="text/javascript"
+    src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"
+    integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA=="
+    crossorigin="anonymous"></script>
+  <script
+    type="text/javascript"
+    charset="utf-8">
+      var socket;
+      $(document).ready(function () {
+        socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+        socket.on('connect', function () {
+          socket.emit('join', {});
+        });
+        socket.on('status', function (data) {
+          $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
+          $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        });
+        socket.on('message', function (data) {
+          //     if(session['username' ]== data.user){
+          //        console.log("same user");
+          //     }
+          $('#chat').val($('#chat').val() + data.msg + '\n');
+          $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        });
+        $('#send').click(function (e) {
+          text = $('#text').val();
 
-                        $('#text').val('');
-                        socket.emit('text', {msg: text});
-                });
-                $( window ).unload(function() {
-                        leave_room();
-                        return "Handler for .unload() called.";
-                });
-            });
+          $('#text').val('');
+          socket.emit('text', { msg: text });
+        });
+        $(window).unload(function () {
+          leave_room();
+          return "Handler for .unload() called.";
+        });
+      });
+      console.log(session)
 
-            function leave_room() {
-                socket.emit('left', {}, function() {
-                    socket.disconnect();
-                    // go back to the login page
-                    window.location.href = "{{ url_for('index') }}";
-                });
+      function leave_room() {
+        socket.emit('left', {}, function () {
+          socket.disconnect();
+          // go back to the login page
+          window.location.href = "{{ url_for('index') }}";
+        });
 
-            }
+      }
 
 
 
@@ -55,59 +63,109 @@
 
 
     </script>
-    <style>
+  <style>
     body {
-  font-family: "Karla", sans-serif;
-  background: linear-gradient(to bottom, rgb(20, 20, 31,0.78), rgb(20, 20, 31,0.78)),url("https://images.pexels.com/photos/6238033/pexels-photo-6238033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
-  min-height: 100vh;
-  background-size:cover;
-  width:40%;
-  margin:auto;
-  opacity: 1;
- }
-      #bodyDiv{
-        box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
-      }
-      #chat{
-        border-radius:10%;
-      }
-      #send{
-        border-radius:40%;
-      }
-      #text{
-        height: 15vh;
-        border-radius : 15%;
-      }
-      #chatwindow{
-        background-color : rgb(163, 163, 194);
-      }
+      font-family: "Karla", sans-serif;
+      background: linear-gradient(to bottom, rgb(20, 20, 31, 0.78), rgb(20, 20, 31, 0.78)), url("https://images.pexels.com/photos/6238033/pexels-photo-6238033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+      /* min-height: 100vh; */
+      background-size: cover;
+      width: 40%;
+      margin: auto;
+      opacity: 1;
+    }
 
+    .chatwindow {
+      /* margin-left: 10vw; */
+      text-align: center;
+    }
 
+    #bodyDiv {
+      box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+    }
 
+    #chat {
+      /* border-radius: 10%; */
+      margin-bottom: 0rem;
+    }
 
+    #send {
+      /* border-radius: 40%; */
+      margin-top: 0rem;
+      height: 5.85vh;
+    }
 
+    #text {
+      margin-top: 0rem;
+      height: 5vh;
+      /* border-radius: 15%; */
+    }
 
-    </style>
+    #chatwindow {
+      background-color: rgb(163, 163, 194);
+    }
+
+    #userNames{
+      height: 20vh;
+      width: 10vh;
+      background-color: coral;
+      float: left;
+      position: fixed;
+    }
+  </style>
 </head>
 
-<body class="text-center">
-<div class="chatwindow" id="chatAreaDiv">
-    <h2 style="color: rgb(255, 255, 255);font-family: 'Brush Script MT';">THE CHATTING APPLICATION</h2>
-    <h2 style="color: rgb(255, 255, 255);font-weight: bold;">Room : {{session['room']}}</h2><br>
-
-    <textarea id="chat" cols="70" rows="10" style="color: rgb(255, 255, 255);font-weight: bold;" disabled
-              placeholder="No messages yet. Start one..."></textarea><br/><br/>
-    <input type="text"  id="text" size="60" placeholder="Enter your message here"/>
-    <button type="button" id="send" class="btn btn-success">SEND</button>
-    <br/><br/>
+<body
+  class="text-center">
+  <div
+    class="chatwindow"
+    id="chatAreaDiv">
+    <h2
+      style="color: rgb(255, 255, 255);font-family: 'Brush Script MT';">
+      THE CHATTING
+      APPLICATION
+    </h2>
+    <h2
+      style="color: rgb(255, 255, 255);font-weight: bold;">
+      Room :
+      {{session['room']}}
+    </h2><br>
+    <div id="userNames">
+      <ul id="userList"></ul>
+    </div>
+    <textarea
+      id="chat"
+      cols="70"
+      rows="10"
+      style="color: rgb(255, 255, 255);font-weight: bold;"
+      disabled
+      placeholder="No messages yet. Start one..."></textarea><br /><br />
+    <input
+      type="text"
+      id="text"
+      size="60"
+      placeholder="Enter your message here" />
+    <button
+      type="button"
+      id="send"
+      class="btn btn-success">SEND</button>
+    <br /><br />
     <center>
-        <button type="button" class="btn btn-secondary">GET OLD CHATS</button>
+      <button
+        type="button"
+        class="btn btn-secondary">CHAT
+        HISTORY</button>
     </center>
-    <br/><br/>
+    <br /><br />
 
     <center>
-        <button type="button" class="btn btn-danger" onclick=leave_room()>Leave this Chat</button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        onclick=leave_room()>Leave
+        this
+        Chat</button>
     </center>
-</div>
+  </div>
 </body>
+
 </html>

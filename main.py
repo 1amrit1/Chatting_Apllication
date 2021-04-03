@@ -78,6 +78,7 @@ def signUpNext():
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     print(session)
+
     if (request.method == 'POST'):
         username = request.form['username']
         room = request.form['room']
@@ -90,6 +91,7 @@ def chat():
             return render_template('chat.html', session=session)
         else:
             return redirect(url_for('index'))
+    # print(session)
 
 
 @socketio.on('join', namespace='/chat')
