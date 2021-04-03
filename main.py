@@ -3,7 +3,9 @@ from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
 from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser
+import json
 
+users = []
 app = Flask(__name__)
 # mongoDB connection############################
 
@@ -103,7 +105,10 @@ def join(message):
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'user': session.get('username')}, room=room)
+    users.append(session.get('username'))
+    # userJson = json.dumps(usersDict)
+    # , 'userJson': usersDict
+    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString,'users':users}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
@@ -117,6 +122,7 @@ def text(message):
     if (message['msg'] == ""):
         return
     msg = session.get('username') + dtString + ' : ' + message['msg']
+
     msgObj = {'chat_room': room, 'message': msg, 'username': session.get('username')}
 
     emit('message',

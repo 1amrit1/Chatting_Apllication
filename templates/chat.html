@@ -27,7 +27,16 @@
         socket.on('status', function (data) {
           $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
           $('#chat').scrollTop($('#chat')[0].scrollHeight);
-          console.log(data.user);
+          console.log(data.users);
+          users = data.users;
+          document.getElementById("userList").innerHTML = "";
+          for(let i = 0; i < users.length;i++){
+            let li = document.createElement("LI");
+            li.innerHTML=users[i];
+            document.getElementById("userList").appendChild(li);
+          }
+
+
         });
         socket.on('message', function (data) {
           //     if(session['username' ]== data.user){
