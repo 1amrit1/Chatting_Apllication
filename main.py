@@ -5,6 +5,7 @@ from datetime import datetime
 from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser
 import json
 
+session
 users = []
 app = Flask(__name__)
 # mongoDB connection############################
@@ -63,13 +64,14 @@ def signUpNext():
                 emailEntered == "" or passwordEntered == "" or confirmPasswordEntered == "" or securityQuestionEntered == "" or securityAnswerEntered == ""):
             flash("Fields cannot be empty!", 'error')
             return redirect(url_for('signUp'))
-        elif(findUser({'email': emailEntered} )!= {}):
-            flash("Email already exsists!",'error')
+        elif (findUser({'email': emailEntered}) != {}):
+            flash("Email already exsists!", 'error')
             return redirect(url_for('signUp'))
         else:
-            userObj = {"email":emailEntered,"password":passwordEntered,"security_question":securityQuestionEntered,"security_answer":securityAnswerEntered}
+            userObj = {"email": emailEntered, "password": passwordEntered, "security_question": securityQuestionEntered,
+                       "security_answer": securityAnswerEntered}
             insertUser(userObj)
-            flash("Your Id Has been Created. Welcome!",'error')
+            flash("Your Id Has been Created. Welcome!", 'error')
             return redirect(url_for('home'))
 
     else:
@@ -93,7 +95,6 @@ def chat():
             return render_template('chat.html', session=session)
         else:
             return redirect(url_for('index'))
-    # print(session)
 
 
 @socketio.on('join', namespace='/chat')
@@ -106,9 +107,7 @@ def join(message):
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
     users.append(session.get('username'))
-    # userJson = json.dumps(usersDict)
-    # , 'userJson': usersDict
-    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString,'users':users}, room=room)
+    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'users': users}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
@@ -136,9 +135,11 @@ def left(message):
     room = session.get('room')
     username = session.get('username')
     leave_room(room)
-    session.clear()
+    # session.clear()
+    # print(username)
+    # session.pop(str(username))
     users.remove(username)
-    emit('status', {'msg': username + ' has left the room.','users':users}, room=room)
+    emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
 
 if __name__ == '__main__':
