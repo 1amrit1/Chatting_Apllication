@@ -30,9 +30,9 @@
           console.log(data.users);
           users = data.users;
           document.getElementById("userList").innerHTML = "";
-          for(let i = 0; i < users.length;i++){
+          for (let i = 0; i < users.length; i++) {
             let li = document.createElement("LI");
-            li.innerHTML=users[i];
+            li.innerHTML = users[i];
             document.getElementById("userList").appendChild(li);
           }
 
@@ -96,6 +96,8 @@
     #chat {
       /* border-radius: 10%; */
       margin-bottom: 0rem;
+      height: 40vh;
+      width: 40vw;
     }
 
     #send {
@@ -106,6 +108,7 @@
 
     #text {
       margin-top: 0rem;
+      width: 36vw;
       height: 5vh;
       /* border-radius: 15%; */
     }
@@ -114,20 +117,27 @@
       background-color: rgb(163, 163, 194);
     }
 
-    #userNames{
+    #userNames {
       height: 90vh;
       width: 40vh;
       background-color: rgb(165, 159, 157);
       float: left;
       position: fixed;
     }
-    #userList{
+
+    #userList {
       color: rgb(49, 5, 5);
       font-weight: bold;
       margin-left: 5vw;
       list-style: none;
       text-align: left;
     }
+
+    #chatHistory,
+    #leaveRoom {
+      height: 7vh;
+    }
+    
   </style>
 </head>
 
@@ -146,34 +156,47 @@
       Room :
       {{session['room']}}
     </h2><br>
-    <div id="userNames">
-      <h2>USERS</h2><hr><hr>
-      <ul id="userList">
-        <li>amar</li>
-        <li>akbar</li>
-        <li>anthony</li>
+    <div
+      id="userNames">
+      <h2>GROUP MEMBERS</h2>
+      <hr>
+      <hr>
+      <ul
+        id="userList">
+        <li>amar
+        </li>
+        <li>akbar
+        </li>
+        <li>anthony
+        </li>
       </ul>
     </div>
-    <textarea
-      id="chat"
-      cols="70"
-      rows="10"
-      style="color: rgb(255, 255, 255);font-weight: bold;"
-      disabled
-      placeholder="No messages yet. Start one..."></textarea><br /><br />
-    <input
-      type="text"
-      id="text"
-      size="60"
-      placeholder="Enter your message here" />
-    <button
-      type="button"
-      id="send"
-      class="btn btn-success">SEND</button>
+    <div
+      id="chatBox">
+      <textarea
+        id="chat"
+        cols="70"
+        rows="10"
+        style="color: rgb(255, 255, 255);font-weight: bold;"
+        disabled
+        placeholder="No messages yet. Start one..."></textarea><br>
+      <input
+        type="text"
+        id="text"
+        size="60"
+        placeholder="Enter your message here" />
+      <button
+        type="button"
+        id="send"
+        class="btn btn-success">SEND</button>
+
+
+    </div>
     <br /><br />
     <center>
       <button
         type="button"
+        id="chatHistory"
         class="btn btn-secondary">CHAT
         HISTORY</button>
     </center>
@@ -183,6 +206,7 @@
       <button
         type="button"
         class="btn btn-danger"
+        id="leaveRoom"
         onclick=leave_room()>Leave
         this
         Chat</button>
