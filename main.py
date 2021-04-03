@@ -77,6 +77,7 @@ def signUpNext():
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
+    print(session)
     if (request.method == 'POST'):
         username = request.form['username']
         room = request.form['room']
