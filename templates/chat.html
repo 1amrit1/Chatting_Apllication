@@ -2,11 +2,13 @@
 <html lang="en">
 
 <head>
-  <title>CHATTING
-    APP</title>
-  <!--Link to CSS -->
-  <!--    <link href="../static/bootstrap.min.css" rel="stylesheet"/>-->
-  <!--    <link href="../static/style.css" rel="stylesheet"/>-->
+  <title>CHATTING APP</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
   <script
     type="text/javascript"
@@ -66,14 +68,7 @@
           // go back to the login page
           window.location.href = "{{ url_for('index') }}";
         });
-
       }
-
-
-
-
-
-
     </script>
   <style>
     body {
@@ -89,9 +84,8 @@
     .chatwindow {
       /* margin-left: 10vw; */
       text-align: center;
+      padding: 65px 60px 60px;
     }
-
-   
 
     #chat {
       /* border-radius: 10%; */
@@ -111,7 +105,7 @@
 
     #text {
       margin-top: 0rem;
-      width: 36vw;
+      width: 35vw;
       height: 5vh;
       /* border-radius: 15%; */
     }
@@ -121,7 +115,7 @@
     }
 
     #userNames {
-      margin-left: 10vw;
+      margin-left: 1vw;
       height: 47vh;
       width: 40vh;
       background-color: rgb(165, 159, 157);
@@ -165,8 +159,7 @@
       Room :
       {{session['room']}}
     </h1><br>
-    <div
-      id="userNames">
+    <div id="userNames">
       <h2>GROUP MEMBERS</h2>
       <hr>
       <hr>
@@ -198,8 +191,6 @@
         type="button"
         id="send"
         class="btn btn-success">SEND</button>
-
-
     </div>
     <br /><br />
     <center>
@@ -208,9 +199,7 @@
         id="chatHistory"
         class="btn btn-secondary">CHAT
         HISTORY</button>
-    </center>
-    <br /><br />
-
+    </center><br>
     <center>
       <button
         type="button"
@@ -222,5 +211,4 @@
     </center>
   </div>
 </body>
-
 </html>
