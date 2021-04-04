@@ -89,7 +89,7 @@ def signUpNext():
 def chat():
     print(session)
 
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         username = request.form['username']
         room = request.form['room']
         # Store the data in session
@@ -97,7 +97,7 @@ def chat():
         session['room'] = room
         return render_template('chat.html', session=session)
     else:
-        if (session.get('username') is not None):
+        if session.get('username') is not None:
             return render_template('chat.html', session=session)
         else:
             return redirect(url_for('index'))#sent to room select
