@@ -19,6 +19,7 @@
     type="text/javascript"
     charset="utf-8">
       var socket;
+      var pgUser;
       $(document).ready(function () {
         socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
         socket.on('connect', function () {
@@ -27,6 +28,7 @@
         socket.on('status', function (data) {
           $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
           $('#chat').scrollTop($('#chat')[0].scrollHeight);
+          //pgUser = data.user;
           console.log(data.users);
           users = data.users;
           document.getElementById("userList").innerHTML = "";
@@ -59,7 +61,7 @@
       });
 
       function leave_room() {
-        socket.emit('left', {}, function () {
+        socket.emit('left', {}, function () {//send.... this fn is called callback fn
           socket.disconnect();
           // go back to the login page
           window.location.href = "{{ url_for('index') }}";
@@ -76,7 +78,7 @@
   <style>
     body {
       font-family: "Karla", sans-serif;
-      background: linear-gradient(to bottom, rgb(20, 20, 31, 0.78), rgb(20, 20, 31, 0.78)), url("https://images.pexels.com/photos/6238033/pexels-photo-6238033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+      background: linear-gradient(to bottom, rgba(76, 76, 78, 0.7), rgba(87, 87, 88, 0.7)), url("https://images.pexels.com/photos/6238033/pexels-photo-6238033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
       /* min-height: 100vh; */
       background-size: cover;
       /* width: 40%; */
@@ -89,15 +91,16 @@
       text-align: center;
     }
 
-    #bodyDiv {
-      box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
-    }
+   
 
     #chat {
       /* border-radius: 10%; */
       margin-bottom: 0rem;
       height: 40vh;
       width: 40vw;
+      opacity : 1;
+      background-color: aliceblue;
+      font-size: large;
     }
 
     #send {
@@ -118,24 +121,34 @@
     }
 
     #userNames {
-      height: 90vh;
+      margin-left: 10vw;
+      height: 47vh;
       width: 40vh;
       background-color: rgb(165, 159, 157);
       float: left;
       position: fixed;
+      opacity: 0.7;
+      border-radius: 10%;
     }
 
     #userList {
-      color: rgb(49, 5, 5);
-      font-weight: bold;
+      color: rgb(3, 26, 53);
+      font-weight:bolder;
       margin-left: 5vw;
       list-style: none;
       text-align: left;
+      font-size: large;
     }
 
     #chatHistory,
     #leaveRoom {
       height: 7vh;
+    }
+    .ownMsg{
+      float:right;
+    }
+    .otherMsg{
+      float : left;
     }
     
   </style>
@@ -146,16 +159,12 @@
   <div
     class="chatwindow"
     id="chatAreaDiv">
-    <h2
-      style="color: rgb(255, 255, 255);font-family: 'Brush Script MT';">
-      THE CHATTING
-      APPLICATION
-    </h2>
-    <h2
+ 
+    <h1
       style="color: rgb(255, 255, 255);font-weight: bold;">
       Room :
       {{session['room']}}
-    </h2><br>
+    </h1><br>
     <div
       id="userNames">
       <h2>GROUP MEMBERS</h2>
@@ -177,7 +186,7 @@
         id="chat"
         cols="70"
         rows="10"
-        style="color: rgb(255, 255, 255);font-weight: bold;"
+        style="color: black;font-weight: bold;"
         disabled
         placeholder="No messages yet. Start one..."></textarea><br>
       <input

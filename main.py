@@ -3,9 +3,15 @@ from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
 from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser
-import json
 
-session
+#if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
+# KeyError: 'email'
+
+#
+
+#gp member
+
+# session
 users = []
 app = Flask(__name__)
 # mongoDB connection############################
@@ -13,12 +19,12 @@ app = Flask(__name__)
 
 ##############################################
 app.debug = True
-app.config['SECRET_KEY'] = 'secret'
+app.config['SECRET_KEY'] = 'secret'#p.t.r
 app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 
-socketio = SocketIO(app, manage_session=False)
+socketio = SocketIO(app, manage_session=False)#false since we will be using our own session (from flask)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -34,12 +40,12 @@ def signUp():
 @app.route('/roomSelect', methods=['GET', 'POST'])
 def index():
     if (request.method == 'POST'):
-        emailEntered = request.form['email']
+        emailEntered = request.form['email']#{'email':'student@lambton.ca'}
         passwordEntered = request.form['password']
         userInDb = findUser({'email': emailEntered})
 
         if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
-            return render_template('index.html')
+            return render_template('index.html')#index is room select page
         else:
             flash("wrong email or password", 'error')
             return redirect(url_for('home'))
@@ -76,7 +82,7 @@ def signUpNext():
 
     else:
 
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))#sent to home page
 
 
 @app.route('/chat', methods=['GET', 'POST'])
@@ -94,20 +100,20 @@ def chat():
         if (session.get('username') is not None):
             return render_template('chat.html', session=session)
         else:
-            return redirect(url_for('index'))
+            return redirect(url_for('index'))#sent to room select
 
 
-@socketio.on('join', namespace='/chat')
+@socketio.on('join', namespace='/chat')#listen
 def join(message):
     room = session.get('room')
-    join_room(room)
+    join_room(room)#join_room -> flask_socketio
     dt = datetime.now()
     date = (dt.strftime("%x"))
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    users.append(session.get('username'))
-    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'users': users}, room=room)
+    users.append(session.get('username'))#for gp members list box
+    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'users': users,'user' : session.get('username')}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
@@ -125,7 +131,7 @@ def text(message):
     msgObj = {'chat_room': room, 'message': msg, 'username': session.get('username')}
 
     emit('message',
-         {'msg': session.get('username') + dtString + ' : ' + message['msg']},
+         {'msg': session.get('username') + dtString + ' : ' + message['msg'],'user': session.get('username')},
          room=room)
     insertMessage(msgObj)
 
