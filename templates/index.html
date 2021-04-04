@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <style>
       body {
-  font-family: "Krona One", sans-serif;
+  font-family: "Karla", sans-serif;
   background: url("https://images.pexels.com/photos/3975677/pexels-photo-3975677.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-size: cover;
   height:500px;
@@ -25,7 +25,7 @@
   border-radius: 27.5px;
   background-color: white;
   opacity: 88%;
-  box-shadow: 0 10px 30px 0 #F2985A;
+  box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
   overflow: hidden; }
 
   .chat-login .chat-body {
@@ -64,13 +64,12 @@
       color: #000; }
 
       #room{
-        width : 40vw;
+        width : 39vw;
         height : 7vh;
         margin-bottom:1rem;
-        background-color : #e6ffff;
+        background-color : #e6fffc;
         color : #602020;
       }
-
     </style>
 </head>
 <body>
@@ -78,6 +77,7 @@
     <div class="container">
         <div class="chat-login">
             <div class="chat-body" style="text-align:center;">
+                <div class="logo"> <img src="Logo.png"></div>
                 <p class="login">Choose Room and Start Chat</p>
                 <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
                     <div class="form1">
@@ -85,6 +85,7 @@
                         <input type="username" name="username" id="username" class="form-control"
                                placeholder="Username">
                     </div>
+                    <div class="formSelect">
                     <select class="form-select" id="room" name="room" aria-label="Default select example">
                         <option selected>SELECT THE ROOM</option>
                         <option value="CSAT">CSAT</option>
@@ -97,9 +98,8 @@
                         <option value="AGE OF EMPIRES">AGE OF EMPIRES</option>
                         <option value="DRAMA CLUB">DRAMA CLUB</option>
                         <option value="BASKETBALL TEAM">BASKETBALL TEAM</option>
-
-
                     </select>
+                    </div>
 
 <!--                    <div class="form2">-->
 <!--                        <label for="room" class="sr-only">Room Name</label>-->
