@@ -142,8 +142,7 @@ def left(message):
     username = session.get('username')
     leave_room(room)
     # session.clear()
-    # print(username)
-    # session.pop(str(username))
+
     users.remove(username)
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 

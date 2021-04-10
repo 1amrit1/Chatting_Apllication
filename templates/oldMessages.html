@@ -20,6 +20,12 @@
 <body>
 
     <h2>CHAT HISTORY</h2>
-    <div id="chatHistory"></div>
+    <div id="chatHistory">
+        {% for msg in msgs %}
+
+        <p>{{ msg.username }}{{ msg.date }} : {{ msg.message }}</p>
+
+        {% endfor %}
+    </div>
 </body>
 </html>
