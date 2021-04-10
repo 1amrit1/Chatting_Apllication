@@ -147,6 +147,11 @@ def left(message):
     users.remove(username)
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
+@app.route('/chatHistory', methods=['GET', 'POST'])
+def chatHistory():
+    print(session)
+    messages = findMessage({'room' :session.get('room') })
+
 
 if __name__ == '__main__':
     socketio.run(app)
