@@ -2,13 +2,25 @@
 <html lang="en">
 
 <head>
-  <title>CHATTING APP</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <title>CHATTING
+    APP</title>
+  <meta
+    charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="ie=edge">
+  <link
+    href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap"
+    rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
   <script
     type="text/javascript"
@@ -22,14 +34,21 @@
     charset="utf-8">
       var socket;
       var pgUser;
+      var user;
       $(document).ready(function () {
+        user = ("{{user}}")
         socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
         socket.on('connect', function () {
           socket.emit('join', {});
         });
         socket.on('status', function (data) {
-          $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
-          $('#chat').scrollTop($('#chat')[0].scrollHeight);
+          var para = document.createElement("p");
+          var node = document.createTextNode(data.msg);
+          para.appendChild(node);
+          $('#chat').append(para);
+
+          // $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
+          // $('#chat').scrollTop($('#chat')[0].scrollHeight);
           //pgUser = data.user;
           console.log(data.users);
           users = data.users;
@@ -46,9 +65,14 @@
           //     if(session['username' ]== data.user){
           //        console.log("same user");
           //     }
-          //console.log(data.user)
-          $('#chat').val($('#chat').val() + data.msg + '\n');
-          $('#chat').scrollTop($('#chat')[0].scrollHeight);
+          
+          var para = document.createElement("p");
+          var node = document.createTextNode(data.msg);
+          para.appendChild(node);
+          // var element = document.getElementById("div1");
+          $('#chat').append(para);
+          // $('#chat').val($('#chat').val() + data.msg + '\n');
+          // $('#chat').scrollTop($('#chat')[0].scrollHeight);
         });
         $('#send').click(function (e) {
           text = $('#text').val();
@@ -92,9 +116,23 @@
       margin-bottom: 0rem;
       height: 40vh;
       width: 40vw;
-      opacity : 1;
+      opacity: 1;
       background-color: aliceblue;
       font-size: large;
+      margin-left: 25rem;
+    }
+
+    #sent {
+      float: right;
+      color: green;
+      font-weight: bold;
+      margin-right: 2rem;
+    }
+
+    #recieved {
+      float: left;
+      color: red;
+      font-weight: bold;
     }
 
     #send {
@@ -127,7 +165,7 @@
 
     #userList {
       color: rgb(3, 26, 53);
-      font-weight:bolder;
+      font-weight: bolder;
       margin-left: 5vw;
       list-style: none;
       text-align: left;
@@ -138,13 +176,19 @@
     #leaveRoom {
       height: 7vh;
     }
-    .ownMsg{
-      float:right;
+
+    .ownMsg {
+      float: right;
     }
-    .otherMsg{
-      float : left;
+
+    .otherMsg {
+      float: left;
     }
-    
+
+    ul {
+      list-style: none;
+
+    }
   </style>
 </head>
 
@@ -153,14 +197,16 @@
   <div
     class="chatwindow"
     id="chatAreaDiv">
- 
+
     <h1
       style="color: rgb(255, 255, 255);font-weight: bold;">
       Room :
       {{session['room']}}
     </h1><br>
-    <div id="userNames">
-      <h2>GROUP MEMBERS</h2>
+    <div
+      id="userNames">
+      <h2>GROUP
+        MEMBERS</h2>
       <hr>
       <hr>
       <ul
@@ -175,13 +221,24 @@
     </div>
     <div
       id="chatBox">
-      <textarea
-        id="chat"
+      <div id="chat"
         cols="70"
         rows="10"
         style="color: black;font-weight: bold;"
-        disabled
-        placeholder="No messages yet. Start one..."></textarea><br>
+        disabled>
+<!--        <ul>-->
+<!--          <li-->
+<!--            id="sent">-->
+<!--            Hi-->
+<!--            sender-->
+<!--          </li>-->
+<!--          <li-->
+<!--            id="recieved">-->
+<!--            Hi-->
+<!--            recieved-->
+<!--          </li>-->
+<!--        </ul>-->
+      </div><br>
       <input
         type="text"
         id="text"
@@ -211,4 +268,5 @@
     </center>
   </div>
 </body>
+
 </html>
