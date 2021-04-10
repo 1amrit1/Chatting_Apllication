@@ -150,7 +150,8 @@ def left(message):
 @app.route('/chatHistory', methods=['GET', 'POST'])
 def chatHistory():
     print(session)
-    messages = findMessage({'room' :session.get('room') })
+    messages = list(findMessage({'room' :session.get('room') }))
+    render_template('oldMessages.html', session=session,msgs = messages)
 
 
 if __name__ == '__main__':
