@@ -128,7 +128,7 @@ def text(message):
         return
     msg = session.get('username') + dtString + ' : ' + message['msg']
 
-    msgObj = {'chat_room': room, 'message': msg, 'username': session.get('username')}
+    msgObj = {'chat_room': room, 'message': message['msg'], 'username': session.get('username'),'date': datetime.now()}
 
     emit('message',
          {'msg': session.get('username') + dtString + ' : ' + message['msg'],'user': session.get('username')},
@@ -147,6 +147,11 @@ def left(message):
     users.remove(username)
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
+@app.route('/chatHistory', methods=['GET', 'POST'])
+def chatHistory():
+    print(session)
+
 
 if __name__ == '__main__':
     socketio.run(app)
+
