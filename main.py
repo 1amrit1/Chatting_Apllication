@@ -148,6 +148,11 @@ def left(message):
 
 @app.route('/chatHistory', methods=['GET', 'POST'])
 def chatHistory():
+    dt = datetime.now()
+    date = (dt.strftime("%x"))
+    hr = (dt.strftime("%H"))
+    min = (dt.strftime("%M"))
+    dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
     print(session)
     messages = list(findMessage({'room' :session.get('room') }))
     print(session.get('room'))
