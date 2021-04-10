@@ -151,7 +151,10 @@ def left(message):
 def chatHistory():
     print(session)
     messages = list(findMessage({'room' :session.get('room') }))
-    render_template('oldMessages.html', session=session,msgs = messages)
+    print(session.get('room'))
+    print(messages)
+    return render_template('oldMessages.html', session=session,msgs = messages)
+
 
 
 if __name__ == '__main__':
