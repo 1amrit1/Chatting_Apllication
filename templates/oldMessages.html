@@ -15,6 +15,11 @@
             padding : 5rem;
             border : 1rem black;
         }
+        #msgList{
+            list-style : none;
+            font-weight : bold;
+            color : red;
+        }
     </style>
 
     <script>
@@ -28,9 +33,9 @@
     <h2>CHAT HISTORY</h2>
     <div id="chatHistory">
         {% for msg in msgs %}
-
-        <p>{{ msg.username }}{{ msg.date }} : {{ msg.message }}</p>
-
+        <ul id="msgList">
+        <li>{{ msg.username }}{{ msg.date }} : {{ msg.message }}</li>
+        </ul>
         {% endfor %}
     </div>
 </body>
