@@ -39,12 +39,12 @@ def signUp():
 
 @app.route('/roomSelect', methods=['GET', 'POST'])
 def index():
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         emailEntered = request.form['email']#{'email':'student@lambton.ca'}
         passwordEntered = request.form['password']
         userInDb = findUser({'email': emailEntered})
 
-        if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
+        if emailEntered == userInDb['email'] and passwordEntered == userInDb['password']:
             return render_template('index.html')#index is room select page
         else:
             flash("wrong email or password", 'error')
@@ -57,13 +57,13 @@ def index():
 
 @app.route('/signUpNext', methods=['GET', 'POST'])
 def signUpNext():
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         emailEntered = request.form['email']
         passwordEntered = request.form['password']
         confirmPasswordEntered = request.form['cPassword']
         securityQuestionEntered = request.form['security_question']
         securityAnswerEntered = request.form['security_answer']
-        if (passwordEntered != confirmPasswordEntered):
+        if passwordEntered != confirmPasswordEntered:
             flash("password and confirm password doesn't match!", 'error')
             return redirect(url_for('signUp'))
         elif (
@@ -89,7 +89,7 @@ def signUpNext():
 def chat():
     print(session)
 
-    if (request.method == 'POST'):
+    if request.method == 'POST':
         username = request.form['username']
         room = request.form['room']
         # Store the data in session
@@ -97,7 +97,7 @@ def chat():
         session['room'] = room
         return render_template('chat.html', session=session)
     else:
-        if (session.get('username') is not None):
+        if session.get('username') is not None:
             return render_template('chat.html', session=session)
         else:
             return redirect(url_for('index'))#sent to room select
@@ -150,6 +150,8 @@ def left(message):
 @app.route('/chatHistory', methods=['GET', 'POST'])
 def chatHistory():
     print(session)
+    messages = list(findMessage({'room' :session.get('room') }))
+    render_template('oldMessages.html', session=session,msgs = messages)
 
 
 if __name__ == '__main__':
