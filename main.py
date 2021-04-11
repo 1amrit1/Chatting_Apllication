@@ -7,17 +7,13 @@ from dataBaseConnection import findUser, findMessage, insertUser, insertMessage,
 #if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
 # KeyError: 'email'
 
-#
-
 #gp member
 
 # session
 users = []
 app = Flask(__name__)
-# mongoDB connection############################
+# mongoDB connection##########################################################################
 
-
-##############################################
 app.debug = True
 app.config['SECRET_KEY'] = 'secret'#p.t.r
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -32,12 +28,12 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/signUp', methods=['GET', 'POST'])
+@app.route('/signUp', methods=['GET', 'POST'])        # Sign In Page
 def signUp():
     return render_template('signUp.html')
 
 
-@app.route('/roomSelect', methods=['GET', 'POST'])
+@app.route('/roomSelect', methods=['GET', 'POST'])      # Room Selection for Chat
 def index():
     if request.method == 'POST':
         emailEntered = request.form['email']#{'email':'student@lambton.ca'}
@@ -55,7 +51,7 @@ def index():
         return redirect(url_for('home'))
 
 
-@app.route('/signUpNext', methods=['GET', 'POST'])
+@app.route('/signUpNext', methods=['GET', 'POST'])       # Sign Up 
 def signUpNext():
     if request.method == 'POST':
         emailEntered = request.form['email']
@@ -116,7 +112,7 @@ def join(message):
     emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'users': users,'user' : session.get('username')}, room=room)
 
 
-@socketio.on('text', namespace='/chat')
+@socketio.on('text', namespace='/chat')      # Start chatting
 def text(message):
     room = session.get('room')
     dt = datetime.now()
@@ -136,7 +132,7 @@ def text(message):
     insertMessage(msgObj)
 
 
-@socketio.on('left', namespace='/chat')
+@socketio.on('left', namespace='/chat')     # On leaving chat room
 def left(message):
     room = session.get('room')
     username = session.get('username')
@@ -146,7 +142,7 @@ def left(message):
     # users.remove(username)
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
-@app.route('/chatHistory', methods=['GET', 'POST'])
+@app.route('/chatHistory', methods=['GET', 'POST'])    # Check on chat history
 def chatHistory():
     dt = datetime.now()
     date = (dt.strftime("%x"))
