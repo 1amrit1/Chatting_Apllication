@@ -1,6 +1,6 @@
-Flask
-Flask_SocketIO
-Flask-Session
+Flask   # For developing web page
+Flask_SocketIO   # Create a server for bi-directional communications
+Flask-Session   #  To store information of user for duration of the session
+pymongo  # To interact with MongoDb from Python
+dnspython # Toolkit for python - Finding Records
 eventlet
-pymongo
-dnspython
