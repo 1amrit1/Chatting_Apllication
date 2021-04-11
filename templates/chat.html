@@ -65,12 +65,24 @@
           //     if(session['username' ]== data.user){
           //        console.log("same user");
           //     }
-          
+
           var para = document.createElement("p");
           var node = document.createTextNode(data.msg);
           para.appendChild(node);
+          if (data.user == user) {
+            para.classList.add("sent");
+          } else {
+            para.classList.add("recieved");
+          }
           // var element = document.getElementById("div1");
           $('#chat').append(para);
+          var br = document.createElement("br");
+          var br2 = document.createElement("br");
+          $('#chat').append(br)
+          $('#chat').append(br2);
+
+
+
           // $('#chat').val($('#chat').val() + data.msg + '\n');
           // $('#chat').scrollTop($('#chat')[0].scrollHeight);
         });
@@ -78,7 +90,7 @@
           text = $('#text').val();
 
           $('#text').val('');
-          socket.emit('text', { msg: text });
+          socket.emit('text', { msg: text ,user:user});
         });
         $(window).unload(function () {
           leave_room();
@@ -101,35 +113,35 @@
       /* min-height: 100vh; */
       background-size: cover;
       /* width: 40%; */
-      margin: auto;
+      /* margin: auto; */
       opacity: 1;
     }
 
     .chatwindow {
       /* margin-left: 10vw; */
       text-align: center;
-      padding: 65px 60px 60px;
+      /* padding:  60px 60px; */
     }
 
     #chat {
       /* border-radius: 10%; */
       margin-bottom: 0rem;
-      height: 40vh;
-      width: 40vw;
+      height: 82vh;
+      width: 73.5vw;
       opacity: 1;
       background-color: aliceblue;
       font-size: large;
-      margin-left: 25rem;
+      margin-left: 20rem;
     }
 
-    #sent {
+    .sent {
       float: right;
       color: green;
       font-weight: bold;
       margin-right: 2rem;
     }
 
-    #recieved {
+    .recieved {
       float: left;
       color: red;
       font-weight: bold;
@@ -139,12 +151,14 @@
       /* border-radius: 40%; */
       margin-top: 0rem;
       height: 5.85vh;
+      /* padding: 1rem */
     }
 
     #text {
       margin-top: 0rem;
-      width: 35vw;
-      height: 5vh;
+      width: 69vw;
+      height: 7vh;
+      margin-left: 14.5rem;
       /* border-radius: 15%; */
     }
 
@@ -154,7 +168,7 @@
 
     #userNames {
       margin-left: 1vw;
-      height: 47vh;
+      height: 80vh;
       width: 40vh;
       background-color: rgb(165, 159, 157);
       float: left;
@@ -172,9 +186,19 @@
       font-size: large;
     }
 
-    #chatHistory,
+    #chatHistory {
+      height: 7vh;
+      position: absolute;
+      top: 92vh;
+      margin-left: 1rem;
+    }
+
     #leaveRoom {
       height: 7vh;
+      position: absolute;
+      margin-left: 10.5rem;
+      top: 92vh;
+
     }
 
     .ownMsg {
@@ -202,11 +226,33 @@
       style="color: rgb(255, 255, 255);font-weight: bold;">
       Room :
       {{session['room']}}
-    </h1><br>
+    </h1>
     <div
+      class="buttons"
+      style="display: flex;">
+      <center>
+        <button
+          type="button"
+          id="chatHistory"
+          class="btn btn-secondary">CHAT
+          HISTORY</button>
+      </center><br>
+      <center>
+        <button
+          type="button"
+          class="btn btn-danger"
+          id="leaveRoom"
+          onclick=leave_room()>Leave
+          this
+          Chat</button>
+      </center>
+    </div>
+    <!-- <div
       id="userNames">
+
       <h2>GROUP
-        MEMBERS</h2>
+        MEMBERS
+      </h2>
       <hr>
       <hr>
       <ul
@@ -215,30 +261,32 @@
         </li>
         <li>akbar
         </li>
-        <li>anthony
+        <li>
+          anthony
         </li>
       </ul>
     </div>
-    <div
-      id="chatBox">
+    <div 
+      id="chatBox">-->
       <div id="chat"
         cols="70"
         rows="10"
         style="color: black;font-weight: bold;"
         disabled>
-<!--        <ul>-->
-<!--          <li-->
-<!--            id="sent">-->
-<!--            Hi-->
-<!--            sender-->
-<!--          </li>-->
-<!--          <li-->
-<!--            id="recieved">-->
-<!--            Hi-->
-<!--            recieved-->
-<!--          </li>-->
-<!--        </ul>-->
-      </div><br>
+        <!--        <ul>-->
+        <!--          <li-->
+        <!--            id="sent">-->
+        <!--            Hi-->
+        <!--            sender-->
+        <!--          </li>-->
+        <!--          <li-->
+        <!--            id="recieved">-->
+        <!--            Hi-->
+        <!--            recieved-->
+        <!--          </li>-->
+        <!--        </ul>-->
+
+      </div>
       <input
         type="text"
         id="text"
@@ -249,23 +297,8 @@
         id="send"
         class="btn btn-success">SEND</button>
     </div>
-    <br /><br />
-    <center>
-      <button
-        type="button"
-        id="chatHistory"
-        class="btn btn-secondary">CHAT
-        HISTORY</button>
-    </center><br>
-    <center>
-      <button
-        type="button"
-        class="btn btn-danger"
-        id="leaveRoom"
-        onclick=leave_room()>Leave
-        this
-        Chat</button>
-    </center>
+
+
   </div>
 </body>
 

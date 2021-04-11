@@ -128,10 +128,10 @@ def text(message):
         return
     msg = session.get('username') + dtString + ' : ' + message['msg']
 
-    msgObj = {'chat_room': room, 'message': message['msg'], 'username': session.get('username'),'date': datetime.now()}
+    msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': datetime.now()}
 
     emit('message',
-         {'msg': session.get('username') + dtString + ' : ' + message['msg'],'user': session.get('username')},
+         {'msg': message['user'] + dtString + ' : ' + message['msg'],'user': message['user']},
          room=room)
     insertMessage(msgObj)
 
@@ -143,7 +143,7 @@ def left(message):
     leave_room(room)
     # session.clear()
 
-    users.remove(username)
+    # users.remove(username)
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
 @app.route('/chatHistory', methods=['GET', 'POST'])
@@ -153,10 +153,7 @@ def chatHistory():
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    print(session)
-    messages = list(findMessage({'room' :session.get('room') }))
-    print(session.get('room'))
-    print(messages)
+    messages = list(findMessage({'chat_room' :session.get('room') }))
     return render_template('oldMessages.html', session=session,msgs = messages)
 
 
