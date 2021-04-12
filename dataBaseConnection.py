@@ -30,3 +30,6 @@ def insertMessage(newMessage):
 def updateUser(newUser):
     users.insert_one(newUser)
     
+icon = findUser({'email': "student4@lambton.ca"})['icon']
+print("before icon print---------------------------")
+print(icon)

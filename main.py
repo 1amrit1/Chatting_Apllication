@@ -135,12 +135,13 @@ def text(message):
 
     msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': dtString}
     email = message['user']+"@lambton.ca";
-    # icon = findUser({'email': email})[0]['icon']
-    # print("before icon print---------------------------")
-    # print(icon) ,'icon' : icon
+    print(email)
+    icon = findUser({'email': email})['icon']
+    print("before icon print---------------------------")
+    print(icon)
 
     emit('message',
-         {'msg': message['user'] + ' : ' + message['msg'],'user': message['user'],'date' : dtString},
+         {'msg': message['user'] + ' : ' + message['msg'],'user': message['user'],'date' : dtString ,'icon' : icon},
          room=room)
     insertMessage(msgObj)
 

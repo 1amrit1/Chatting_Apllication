@@ -65,14 +65,31 @@
           //     if(session['username' ]== data.user){
           //        console.log("same user");
           //     }
-          // var icon = data.icon;
+          var icon = data.icon;
+          console.log(icon)
+          var imgSrc;
+          if(icon == "boy1.svg"){
+            imgSrc = "{{url_for('static', filename='boy1.svg')}}";
+          }else if(icon == "boy2.svg"){
+            
+            imgSrc = "{{url_for('static', filename='boy2.svg')}}";
+          }
+          else if (icon == "girl1.svg") {
+            
+            imgSrc = "{{url_for('static', filename='girl1.svg')}}";
+          }
+          else{
+            
+            imgSrc = "{{url_for('static', filename='girl2.svg')}}";
+          }
+            
           // console.log(icon);
           // console.log(iconSrc);
-
+          console.log(imgSrc)
           var para = document.createElement("p");
           var node = document.createTextNode(data.msg);
           var img = document.createElement("img");
-          img.src = "{{url_for('static', filename='boy1.svg')}}";
+          img.src = imgSrc;
 
           // iconSrc;
           img.classList.add("icon");
