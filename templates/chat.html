@@ -69,13 +69,37 @@
           var para = document.createElement("p");
           var node = document.createTextNode(data.msg);
           para.appendChild(node);
+          var Datepara;
           if (data.user == user) {
             para.classList.add("sent");
+            para.classList.add("msg");
+            var Datepara = document.createElement("p");
+            var DateNode = document.createTextNode(data.date);
+            Datepara.appendChild(DateNode);
+            Datepara.classList.add("msgDateTimeSender")
+            var hr = document.createElement("hr");
+            para.appendChild(hr)
+            para.appendChild(Datepara)
+
           } else {
             para.classList.add("recieved");
+            para.classList.add("msg");
+            var Datepara = document.createElement("p");
+            var DateNode = document.createTextNode(data.date);
+            Datepara.appendChild(DateNode);
+            Datepara.classList.add("msgDateTimeReciever")
+
           }
+
+
+          var div = document.createElement("div");
+          div.appendChild(para);
+          var br = document.createElement("br");
+          div.appendChild(br)
+          // div.appendChild(Datepara)
+
           // var element = document.getElementById("div1");
-          $('#chat').append(para);
+          $('#chat').append(div);
           var br = document.createElement("br");
           var br2 = document.createElement("br");
           $('#chat').append(br)
@@ -90,7 +114,7 @@
           text = $('#text').val();
 
           $('#text').val('');
-          socket.emit('text', { msg: text ,user:user});
+          socket.emit('text', { msg: text, user: user });
         });
         $(window).unload(function () {
           leave_room();
@@ -108,13 +132,14 @@
     </script>
   <style>
     body {
+      background-color: rgb(172, 198, 211);
       font-family: "Karla", sans-serif;
-      background: linear-gradient(to bottom, rgba(76, 76, 78, 0.7), rgba(87, 87, 88, 0.7)), url("https://images.pexels.com/photos/6238033/pexels-photo-6238033.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
       /* min-height: 100vh; */
       background-size: cover;
       /* width: 40%; */
       /* margin: auto; */
       opacity: 1;
+      margin: 0rem;
     }
 
     .chatwindow {
@@ -127,7 +152,7 @@
       /* border-radius: 10%; */
       margin-bottom: 0rem;
       height: 82vh;
-      width: 73.5vw;
+      width: 78vw;
       opacity: 1;
       background-color: aliceblue;
       font-size: large;
@@ -150,15 +175,16 @@
     #send {
       /* border-radius: 40%; */
       margin-top: 0rem;
-      height: 5.85vh;
+      height: 6.7vh;
       /* padding: 1rem */
+      width: 9vw;
     }
 
     #text {
       margin-top: 0rem;
       width: 69vw;
       height: 7vh;
-      margin-left: 14.5rem;
+      margin-left: 19rem;
       /* border-radius: 15%; */
     }
 
@@ -167,14 +193,15 @@
     }
 
     #userNames {
-      margin-left: 1vw;
-      height: 80vh;
+      margin-left: 1.1vw;
+      height: 88.5vh;
       width: 40vh;
-      background-color: rgb(165, 159, 157);
+      background-color: aliceblue;
+      border: 1rem black;
       float: left;
       position: fixed;
-      opacity: 0.7;
-      border-radius: 10%;
+      top: 0;
+      /* border-radius: 10%; */
     }
 
     #userList {
@@ -189,7 +216,7 @@
     #chatHistory {
       height: 7vh;
       position: absolute;
-      top: 92vh;
+      top: 88.5vh;
       margin-left: 1rem;
     }
 
@@ -197,7 +224,7 @@
       height: 7vh;
       position: absolute;
       margin-left: 10.5rem;
-      top: 92vh;
+      top: 88.5vh;
 
     }
 
@@ -213,6 +240,23 @@
       list-style: none;
 
     }
+
+    .msgDateTimeSender {
+      float: right;
+      font-size: 0.7rem;
+    }
+
+    .msgDateTimeReciever {
+      float: left;
+      font-size: 1rem;
+    }
+
+    .msg {
+      background-color: rgb(236, 229, 229);
+      border-radius: 30%;
+
+      width: 30%;
+    }
   </style>
 </head>
 
@@ -223,13 +267,59 @@
     id="chatAreaDiv">
 
     <h1
-      style="color: rgb(255, 255, 255);font-weight: bold;">
-      Room :
+      style="font-weight: bold; background-color: aquamarine; width: 78vw; margin-left: 20rem; margin-bottom: 0rem;">
+
       {{session['room']}}
     </h1>
+
+    <div
+      id="userNames">
+
+      <h2
+        style="background-color: aquamarine; padding-bottom: 0.6rem;">
+        PARTICIPANTS
+      </h2>
+
+      <ul
+        id="userList"
+        style="color: rgb(57, 20, 220);">
+        <li>amar
+        </li>
+        <li>akbar
+        </li>
+        <li>
+          anthony
+        </li>
+      </ul>
+    </div>
+    <div
+      id="chatBox">
+      <div id="chat"
+        cols="70"
+        rows="10"
+        style="color: black;font-weight: bold;"
+        disabled>
+
+
+        <p
+          class="msg">
+          a: HI!</p>
+
+      </div>
+      <input
+        type="text"
+        id="text"
+        size="60"
+        placeholder="Enter your message here" />
+      <button
+        type="button"
+        id="send"
+        class="btn btn-success">SEND</button>
+    </div>
     <div
       class="buttons"
       style="display: flex;">
+
       <center>
         <button
           type="button"
@@ -246,56 +336,7 @@
           this
           Chat</button>
       </center>
-    </div>
-    <!-- <div
-      id="userNames">
 
-      <h2>GROUP
-        MEMBERS
-      </h2>
-      <hr>
-      <hr>
-      <ul
-        id="userList">
-        <li>amar
-        </li>
-        <li>akbar
-        </li>
-        <li>
-          anthony
-        </li>
-      </ul>
-    </div>
-    <div 
-      id="chatBox">-->
-      <div id="chat"
-        cols="70"
-        rows="10"
-        style="color: black;font-weight: bold;"
-        disabled>
-        <!--        <ul>-->
-        <!--          <li-->
-        <!--            id="sent">-->
-        <!--            Hi-->
-        <!--            sender-->
-        <!--          </li>-->
-        <!--          <li-->
-        <!--            id="recieved">-->
-        <!--            Hi-->
-        <!--            recieved-->
-        <!--          </li>-->
-        <!--        </ul>-->
-
-      </div>
-      <input
-        type="text"
-        id="text"
-        size="60"
-        placeholder="Enter your message here" />
-      <button
-        type="button"
-        id="send"
-        class="btn btn-success">SEND</button>
     </div>
 
 

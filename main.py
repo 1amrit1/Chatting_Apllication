@@ -120,18 +120,18 @@ def join(message):
 def text(message):
     room = session.get('room')
     dt = datetime.now()
-    date = (dt.strftime("%x"))
-    hr = (dt.strftime("%H"))
-    min = (dt.strftime("%M"))
-    dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
+    date = (dt.strftime("%d"))+"-"+(dt.strftime("%b"))
+    time = (dt.strftime("%H"))+":"+(dt.strftime("%M"))
+    dtString = time+" , "+date
+    print(dtString)
     if (message['msg'] == ""):
         return
     msg = session.get('username') + dtString + ' : ' + message['msg']
 
-    msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': datetime.now()}
+    msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': dtString}
 
     emit('message',
-         {'msg': message['user'] + dtString + ' : ' + message['msg'],'user': message['user']},
+         {'msg': message['user'] + ' : ' + message['msg'],'user': message['user'],'date' : dtString},
          room=room)
     insertMessage(msgObj)
 
