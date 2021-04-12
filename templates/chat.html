@@ -90,10 +90,16 @@
           var node = document.createTextNode(data.msg);
           var img = document.createElement("img");
           img.src = imgSrc;
+          var userStr = data.user+":"
 
+          var userNode = document.createTextNode( userStr);
+          var userPara = document.createElement("p");
+          userPara.appendChild(userNode);
+          userPara.classList.add("userNameNode"); 
           // iconSrc;
           img.classList.add("icon");
           para.appendChild(img);
+          para.appendChild(userPara);
           para.appendChild(node);
           var Datepara;
           if (data.user == user) {
@@ -298,6 +304,11 @@
       background-color: aqua;
       border-radius: 50%;
       float: left;
+    }
+    .userNameNode{
+      float: left;
+      margin-right: 1rem;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
