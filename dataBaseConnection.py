@@ -34,3 +34,6 @@ def updateUser(emailEntered,passwordEntered):
     passwordObj = {"$set": {"password": passwordEntered}}
     users.update(emailObj,passwordObj)
     
+icon = findUser({'email': "student4@lambton.ca"})['icon']
+print("before icon print---------------------------")
+print(icon)
