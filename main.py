@@ -59,6 +59,7 @@ def signUpNext():
         confirmPasswordEntered = request.form['cPassword']
         securityQuestionEntered = request.form['security_question']
         securityAnswerEntered = request.form['security_answer']
+        icon = request.form['avatar']
         if passwordEntered != confirmPasswordEntered:
             flash("password and confirm password doesn't match!", 'error')
             return redirect(url_for('signUp'))
@@ -71,7 +72,7 @@ def signUpNext():
             return redirect(url_for('signUp'))
         else:
             userObj = {"email": emailEntered, "password": passwordEntered, "security_question": securityQuestionEntered,
-                       "security_answer": securityAnswerEntered}
+                       "security_answer": securityAnswerEntered, "icon" : icon}
             insertUser(userObj)
             flash("Your Id Has been Created. Welcome!", 'error')
             return redirect(url_for('home'))
@@ -99,10 +100,10 @@ def chat():
         # Store the data in session
         session['username'] = username
         session['room'] = room
-        return render_template('chat.html', session=session,user = session['username'])
+        return render_template('chat.html', session=session, user=username)
     else:
         if session.get('username') is not None:
-            return render_template('chat.html', session=session)
+            return render_template('chat.html', session=session, user=session.get('username'))
         else:
             return redirect(url_for('index'))#sent to room select
 
@@ -133,6 +134,10 @@ def text(message):
     msg = session.get('username') + dtString + ' : ' + message['msg']
 
     msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': dtString}
+    email = message['user']+"@lambton.ca";
+    # icon = findUser({'email': email})[0]['icon']
+    # print("before icon print---------------------------")
+    # print(icon) ,'icon' : icon
 
     emit('message',
          {'msg': message['user'] + ' : ' + message['msg'],'user': message['user'],'date' : dtString},

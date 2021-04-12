@@ -65,11 +65,16 @@
           //     if(session['username' ]== data.user){
           //        console.log("same user");
           //     }
+          // var icon = data.icon;
+          // console.log(icon);
+          // console.log(iconSrc);
 
           var para = document.createElement("p");
           var node = document.createTextNode(data.msg);
           var img = document.createElement("img");
           img.src = "{{url_for('static', filename='boy1.svg')}}";
+
+          // iconSrc;
           img.classList.add("icon");
           para.appendChild(img);
           para.appendChild(node);
