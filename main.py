@@ -41,7 +41,7 @@ def index():
         userInDb = findUser({'email': emailEntered})
 
         if emailEntered == userInDb['email'] and passwordEntered == userInDb['password']:
-            return render_template('index.html')#index is room select page
+            return render_template('index.html',userName=  emailEntered)#index is room select page
         else:
             flash("wrong email or password", 'error')
             return redirect(url_for('home'))
@@ -59,6 +59,7 @@ def signUpNext():
         confirmPasswordEntered = request.form['cPassword']
         securityQuestionEntered = request.form['security_question']
         securityAnswerEntered = request.form['security_answer']
+        icon = request.form['avatar']
         if passwordEntered != confirmPasswordEntered:
             flash("password and confirm password doesn't match!", 'error')
             return redirect(url_for('signUp'))
@@ -71,7 +72,7 @@ def signUpNext():
             return redirect(url_for('signUp'))
         else:
             userObj = {"email": emailEntered, "password": passwordEntered, "security_question": securityQuestionEntered,
-                       "security_answer": securityAnswerEntered}
+                       "security_answer": securityAnswerEntered, "icon" : icon}
             insertUser(userObj)
             flash("Your Id Has been Created. Welcome!", 'error')
             return redirect(url_for('home'))
@@ -103,15 +104,15 @@ def chat():
     print(session)
 
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].split("@")[0]
         room = request.form['room']
         # Store the data in session
         session['username'] = username
         session['room'] = room
-        return render_template('chat.html', session=session,user = session['username'])
+        return render_template('chat.html', session=session, user=username)
     else:
         if session.get('username') is not None:
-            return render_template('chat.html', session=session)
+            return render_template('chat.html', session=session, user=session.get('username'))
         else:
             return redirect(url_for('index'))#sent to room select
 
@@ -126,7 +127,7 @@ def join(message):
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
     users.append(session.get('username'))#for gp members list box
-    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'users': users,'user' : session.get('username')}, room=room)
+    emit('status', {'msg': session.get('username') + ' has entered the room' , 'users': users,'user' : session.get('username')}, room=room)
 
 
 @socketio.on('text', namespace='/chat')      # Start chatting
@@ -142,6 +143,10 @@ def text(message):
     msg = session.get('username') + dtString + ' : ' + message['msg']
 
     msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': dtString}
+    email = message['user']+"@lambton.ca";
+    # icon = findUser({'email': email})[0]['icon']
+    # print("before icon print---------------------------")
+    # print(icon) ,'icon' : icon
 
     emit('message',
          {'msg': message['user'] + ' : ' + message['msg'],'user': message['user'],'date' : dtString},
@@ -156,7 +161,7 @@ def left(message):
     leave_room(room)
     # session.clear()
 
-    # users.remove(username)
+    users.remove(message['user'])
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
 @app.route('/chatHistory', methods=['GET', 'POST'])    # Check on chat history
