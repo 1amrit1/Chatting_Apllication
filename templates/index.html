@@ -14,17 +14,34 @@
           background: url("https://images.pexels.com/photos/3975677/pexels-photo-3975677.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
           background-size: cover;
           height:500px;
-          width:50%;
+          width:40%;
           margin:auto;
          }
+    
+    .glow {
+      font-family: 'Freckle Face', cursive;
+      font-size: 80px;
+      color: #fff;
+      text-align: center;
+      animation: glow 1s ease-in-out infinite alternate;
+    }
 
+      @-webkit-keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #00c7e6, 0 0 60px #00c7e6, 0 0 70px #e60073;
+        }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+        }
+      }
+        
     .chat-login {
       position: relative;
-      margin: 50px auto;
+      margin: 40px auto;
       border: 0;
       border-radius: 27.5px;
       background-color: white;
-      opacity: 88%;
+      opacity: 1.0;
       box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
       overflow: hidden; }
 
@@ -64,7 +81,7 @@
           color: #000; }
 
           #room{
-            width : 39vw;
+            width : 60vh;
             height : 7vh;
             margin-bottom:1rem;
             background-color : #e6fffc;
@@ -77,7 +94,7 @@
     <div class="container">
         <div class="chat-login">
             <div class="chat-body" style="text-align:center;">
-                <div class="logo"> <img src="Logo.png"></div>
+                <div class="logo"><h3 class="glow">Chit Chat</h3></div>
                 <p class="login">Choose Room and Start Chat</p>
                 <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
                     <div class="form1">
