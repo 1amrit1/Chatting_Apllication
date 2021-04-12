@@ -150,7 +150,7 @@ def text(message):
     print(icon)
 
     emit('message',
-         {'msg': message['user'] + ' : ' + message['msg'],'user': message['user'],'date' : dtString ,'icon' : icon},
+         {'msg':  message['msg'],'user': message['user'],'date' : dtString ,'icon' : icon},
          room=room)
     insertMessage(msgObj)
 
