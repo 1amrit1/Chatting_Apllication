@@ -81,6 +81,14 @@ def signUpNext():
         return redirect(url_for('home'))#sent to home page
 
 
+@app.route('/forgotPasswordNext', methods=['GET', 'POST'])       # Sign Up
+def forgotPasswordNext():
+    if request.method == 'POST':
+        emailEntered = request.form['email']
+        securityQuestionEntered = request.form['security_question']
+        securityAnswerEntered = request.form['security_answer']
+
+
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     print(session)
@@ -155,4 +163,3 @@ def chatHistory():
 
 if __name__ == '__main__':
     socketio.run(app)
-
