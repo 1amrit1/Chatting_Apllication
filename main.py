@@ -82,12 +82,21 @@ def signUpNext():
         return redirect(url_for('home'))#sent to home page
 
 
-@app.route('/forgotPasswordNext', methods=['GET', 'POST'])       # Sign Up
+@app.route('/forgotPasswordNext', methods=['GET', 'POST'])       # forget password
 def forgotPasswordNext():
     if request.method == 'POST':
         emailEntered = request.form['email']
         securityQuestionEntered = request.form['security_question']
         securityAnswerEntered = request.form['security_answer']
+
+        if (emailEntered == "" or securityQuestionEntered == "" or securityAnswerEntered == ""):
+            flash("Please enter all fields!", 'error')
+            return redirect(url_for('forgotPassword'))
+        elif (findUser({'email': emailEntered,"security_question":securityQuestionEntered,"security_answer":securityAnswerEntered}) != {}):
+            flash("Your password will be reset!", 'error')
+            return redirect(url_for('resetPassword'))
+        else:
+            return redirect(url_for('forgotPassword'))
 
 
 @app.route('/chat', methods=['GET', 'POST'])
