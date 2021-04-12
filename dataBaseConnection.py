@@ -20,7 +20,6 @@ def findUser(query):  #authentication
     return k
 # print(findUser({'email': 'student@lambton.ca'}))
 
-
 def findMessage(query):
     res = messages.find(query)
     return res
@@ -30,3 +29,4 @@ def insertMessage(newMessage):
     messages.insert_one(newMessage)
 def updateUser(newUser):
     users.insert_one(newUser)
+    
