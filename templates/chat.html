@@ -68,6 +68,10 @@
 
           var para = document.createElement("p");
           var node = document.createTextNode(data.msg);
+          var img = document.createElement("img");
+          img.src = "{{url_for('static', filename='boy1.svg')}}";
+          img.classList.add("icon");
+          para.appendChild(img);
           para.appendChild(node);
           var Datepara;
           if (data.user == user) {
@@ -128,7 +132,7 @@
       });
 
       function leave_room() {
-        socket.emit('left', {}, function () {//send.... this fn is called callback fn
+        socket.emit('left', { user: user }, function () {//send.... this fn is called callback fn
           socket.disconnect();
           // go back to the login page
           window.location.href = "{{ url_for('index') }}";
@@ -261,10 +265,17 @@
     }
 
     .msg {
-      background-color: rgb(236, 229, 229);
+      background-color: rgb(224, 235, 235);
       border-radius: 20%;
 
       width: 30%;
+    }
+
+    .icon {
+      height: 2rem;
+      background-color: aqua;
+      border-radius: 50%;
+      float: left;
     }
   </style>
 </head>
@@ -310,9 +321,15 @@
         disabled>
 
 
-        <p
+        <!-- <p
           class="msg">
-          a: HI!</p>
+          <img
+            class="icon"
+            src="{{url_for('static', filename='boy1.svg')}}"
+            alt=""
+            srcset="">
+          a: HI!
+        </p> -->
 
       </div>
       <input

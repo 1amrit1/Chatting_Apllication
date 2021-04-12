@@ -98,9 +98,9 @@
                 <p class="login">Choose Room and Start Chat</p>
                 <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
                     <div class="form1">
-                        <label for="username" class="sr-only">Username</label>
+                        <label for="username" class="sr-only" >User Name</label>
                         <input type="username" name="username" id="username" class="form-control"
-                               placeholder="Username">
+                               placeholder="{{userName}}" value="{{userName}}" readonly>
                     </div>
                     <div class="formSelect">
                     <select class="form-select" id="room" name="room" aria-label="Default select example">

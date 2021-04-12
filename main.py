@@ -41,7 +41,7 @@ def index():
         userInDb = findUser({'email': emailEntered})
 
         if emailEntered == userInDb['email'] and passwordEntered == userInDb['password']:
-            return render_template('index.html')#index is room select page
+            return render_template('index.html',userName=  emailEntered)#index is room select page
         else:
             flash("wrong email or password", 'error')
             return redirect(url_for('home'))
@@ -86,7 +86,7 @@ def chat():
     print(session)
 
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].split("@")[0]
         room = request.form['room']
         # Store the data in session
         session['username'] = username
@@ -109,7 +109,7 @@ def join(message):
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
     users.append(session.get('username'))#for gp members list box
-    emit('status', {'msg': session.get('username') + ' has entered the room at ' + dtString, 'users': users,'user' : session.get('username')}, room=room)
+    emit('status', {'msg': session.get('username') + ' has entered the room' , 'users': users,'user' : session.get('username')}, room=room)
 
 
 @socketio.on('text', namespace='/chat')      # Start chatting
@@ -139,7 +139,7 @@ def left(message):
     leave_room(room)
     # session.clear()
 
-    # users.remove(username)
+    users.remove(message['user'])
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
 @app.route('/chatHistory', methods=['GET', 'POST'])    # Check on chat history
