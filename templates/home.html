@@ -87,9 +87,23 @@
   .login-card-footer-nav a {
     font-size: 14px;
     color: #919aa3; }
+  
+  .glow {
+      font-family: 'Freckle Face', cursive;
+      font-size: 80px;
+      color: #fff;
+      text-align: center;
+      animation: glow 1s ease-in-out infinite alternate;
+  }
 
-
-
+  @-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #00c7e6, 0 0 60px #00c7e6, 0 0 70px #e60073;
+    }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+  }
 
     </style>
 </head>
@@ -103,7 +117,7 @@
 
                 <div class="card-body" style="text-align:center;">
                     <div class="brand-wrapper">
-                        <img src="./Logo.svg" alt="logo" class="logo">
+                        <h3 class="glow">Chit Chat</h3>
                     </div>
                     <p class="login-card-description">Sign into your account</p>
                     <form action="{{url_for('index')}}" style="margin:auto;" method="post">
