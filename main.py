@@ -109,7 +109,7 @@ def resetPasswordNext():
         if (emailEntered == "" or passwordEntered == "" or confirmPasswordEntered == ""):
             flash("Please enter all fields!", 'error')
             return redirect(url_for('forgotPassword'))
-        elif (passwordEntered != confirmPasswordEntered)
+        elif (passwordEntered != confirmPasswordEntered):
             flash("Please enter same password in both fields", 'error')
             return redirect(url_for('forgotPassword'))
         elif (findUser({'email': emailEntered, "password": passwordEntered}) != {}):
