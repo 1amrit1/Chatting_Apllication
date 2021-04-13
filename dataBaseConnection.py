@@ -28,7 +28,6 @@ def insertUser(newUser):
 def insertMessage(newMessage):
     messages.insert_one(newMessage)
 
-
 def updateUser(emailEntered,passwordEntered):
     emailObj = {"email": emailEntered}
     passwordObj = {"$set": {"password": passwordEntered}}
