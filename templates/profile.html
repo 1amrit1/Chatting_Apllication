@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta
+        charset="UTF-8">
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="IE=edge">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>Document
+    </title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div
+        class="profileCard">
+        <!-- <img id="profileAvatar" src="{{url_for('static', filename='boy1.svg')}}" alt="" srcset=""> -->
+        <img id="profileAvatar"
+            src="../static/boy1.svg"
+            alt=""
+            srcset="">
+
+        <div
+            id="emailDiv">
+            <h1>Email:
+                student@mylambton.ca
+            </h1>
+        </div>
+
+        <div
+            id="iconDiv">
+
+
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='boy1.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="{{url_for('static', filename='boy1.svg')}}"
+                    checked>
+
+            </label>
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='boy2.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="{{url_for('static', filename='boy2.svg')}}">
+
+            </label>
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='girl1.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="girl1.svg">
+
+            </label>
+
+        </div>
+
+
+    </div>
+</body>
+
+</html>
