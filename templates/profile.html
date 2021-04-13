@@ -13,7 +13,7 @@
     <title>Document
     </title>
     <style>
-  body {
+        body {
             background-color: rgb(133, 173, 173);
             text-align: center;
         }
@@ -46,6 +46,27 @@
             width: 50vw;
         }
 
+        #avatarButton {
+            font-weight: bold;
+            height: 7vh;
+            margin-top: 3rem;
+            background-color: rgb(47, 84, 85);
+            color: white;
+            border: 0.5rem;
+            border: solid;
+            border-radius: 40%;
+        }
+
+        #passwordButton {
+            font-weight: bold;
+            height: 7vh;
+            margin-top: 3rem;
+            background-color: rgb(85, 3, 3);
+            color: white;
+            border: 0.5rem;
+            border: solid;
+            border-radius: 40%;
+        }
     </style>
 </head>
 
@@ -106,9 +127,27 @@
                     value="girl1.svg">
 
             </label>
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='girl2.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="girl2.svg">
 
+            </label>
         </div>
-
+        <button
+            id="avatarButton">Change
+            Avatar
+        </button>
+        <br>
+        <button
+            id="passwordButton">Change
+            Password</button>
 
     </div>
 </body>
