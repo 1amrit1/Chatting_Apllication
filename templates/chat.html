@@ -65,6 +65,16 @@
           //     if(session['username' ]== data.user){
           //        console.log("same user");
           //     }
+          var msg = "";
+          var msgLines = 0;
+          for(let i = 0;i<data.msg.length;i++){
+            if(i % 23 == 0 && i != 0){
+              msg += "\n";
+              msgLines++;
+            }
+            
+            msg+=data.msg.charAt(i);
+          }
           var icon = data.icon;
           console.log(icon)
           var imgSrc;
@@ -87,7 +97,7 @@
           // console.log(iconSrc);
           console.log(imgSrc)
           var para = document.createElement("p");
-          var node = document.createTextNode(data.msg);
+          var node = document.createTextNode(msg);
           var img = document.createElement("img");
           img.src = imgSrc;
           var userStr = data.user + ":"
@@ -128,6 +138,7 @@
 
           var div = document.createElement("div");
           div.appendChild(para);
+          div.classList.add("singleMsgDiv");
           // var br = document.createElement("br");
           // div.appendChild(br)
           // div.appendChild(Datepara)
@@ -140,6 +151,11 @@
           $('#chat').append(br);
           $('#chat').append(br2);
           $('#chat').append(br3);
+          for(let i = 0; i < msgLines;i++){
+             var br4 = document.createElement("br");
+             $('#chat').append(br4);
+          }
+          
 
 
 
@@ -197,12 +213,19 @@
       overflow: scroll;
     }
 
+    /* .singleMsgDiv{
+      overflow: scroll;
+    } */
+
     .sent {
       float: right;
       color: green;
       font-weight: bold;
       margin-right: 2rem;
-      height: 5.4vh;
+      /* height: 6.4vh; */
+      /* overflow: auto; */
+      /* overflow: scroll; */
+
 
     }
 
@@ -210,7 +233,9 @@
       float: left;
       color: red;
       font-weight: bold;
-      height: 5.4vh;
+      /* height: 6.4vh; */
+      /* overflow: scroll; */
+
 
     }
 
@@ -383,9 +408,9 @@
 
       <center>
         <form
-          action="{{url_for('chatHistory')}}" method="POST">
+          action="{{url_for('chatHistory')}}"
+          method="POST">
           <button
-            
             id="chatHistory"
             class="btn btn-secondary"
             value="submit">CHAT
