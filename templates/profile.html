@@ -93,15 +93,17 @@
         <h2>Change
             Avatar
         </h2>
-        
+
         <form
-            action="{{url_for('avatarChangeFromProfile')}}" method="POST">
+            action="{{url_for('avatarChangeFromProfile')}}"
+            method="POST">
             <input
                 type="username"
                 name="userName"
                 placeholder="{{userName}}"
                 value="{{userName}}"
-                readonly hidden>
+                readonly
+                hidden>
             <div
                 id="iconDiv">
 
@@ -164,9 +166,12 @@
             </button>
         </form>
         <br>
-        <button
-            id="passwordButton">Change
-            Password</button>
+        <form
+            action="{{url_for('forgotPassword')}}" method="POST">
+            <button
+                id="passwordButton">Change
+                Password</button>
+        </form>
 
     </div>
 </body>

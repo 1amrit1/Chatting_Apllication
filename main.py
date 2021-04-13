@@ -81,7 +81,9 @@ def signUpNext():
 
         return redirect(url_for('home'))  # sent to home page
 
-
+@app.route('/forgotPassword', methods=['GET', 'POST'])  # forget password
+def forgotPassword():
+    return render_template('forgotPassword.html')
 @app.route('/forgotPasswordNext', methods=['GET', 'POST'])  # forget password
 def forgotPasswordNext():
     if request.method == 'POST':
@@ -94,8 +96,8 @@ def forgotPasswordNext():
             return redirect(url_for('forgotPassword'))
         elif (findUser({'email': emailEntered, "security_question": securityQuestionEntered,
                         "security_answer": securityAnswerEntered}) != {}):
-            flash("Your password will be reset!", 'error')
-            return redirect(url_for('resetPassword'))
+            # flash("Your password will be reset!", 'error')
+            return render_template('resetPassword.html')
         else:
             return redirect(url_for('forgotPassword'))
 
@@ -113,14 +115,15 @@ def resetPasswordNext():
         elif (passwordEntered != confirmPasswordEntered):
             flash("Please enter same password in both fields", 'error')
             return redirect(url_for('forgotPassword'))
-        elif (findUser({'email': emailEntered, "password": passwordEntered}) != {}):
-
+        elif (findUser({'email': emailEntered}) != {}):
             updateUser(emailEntered, passwordEntered)
             flash("Your password has been reset!", 'error')
             return redirect(url_for('home'))
         else:
             flash("Something went wrong.Please try again!")
             return redirect(url_for('resetPassword'))
+    else:   return redirect(url_for('forgotPassword'))
+
 
 
 @app.route('/chat', methods=['GET', 'POST'])
