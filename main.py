@@ -206,12 +206,17 @@ def chatHistory():
 @app.route('/userProfile', methods=['GET', 'POST'])  # profile
 def userProfile():
     if request.method == 'POST':
-        username = request.form['username'].split("@")[0]
-        return render_template('profile.html',username=username)
+        username = request.form['userName']
+        icon = findUser({'email': username})['icon']
+        print(username)
+
+        return render_template('profile.html',username=username,icon=icon)
 
     else:
         if session.get('username') is not None:
-            return render_template('profile.html')
+            username = session.get('username')
+            icon = findUser({'email': username})['icon']
+            return render_template('profile.html',username=session.get('username'),icon=icon)
         else:
             return redirect(url_for('index'))  # sent to room select
 
