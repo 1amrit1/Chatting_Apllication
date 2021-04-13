@@ -199,7 +199,9 @@ def chatHistory():
     messages = list(findMessage({'chat_room' :session.get('room') }))
     return render_template('oldMessages.html', session=session,msgs = messages)
 
-
+@app.route('/userProfile', methods=['GET', 'POST'])       # profile
+def userProfile():
+    return render_template('profile.html')
 
 if __name__ == '__main__':
     socketio.run(app)

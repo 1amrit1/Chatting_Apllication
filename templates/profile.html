@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta
+        charset="UTF-8">
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="IE=edge">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>Document
+    </title>
+    <style>
+        body {
+            background-color: rgb(133, 173, 173);
+            text-align: center;
+        }
+
+        .icon {
+            height: 3rem;
+            background-color: aqua;
+            border-radius: 50%;
+            /* float: left; */
+        }
+
+        #iconDiv {
+            /* display: flex; */
+            text-align: center;
+        }
+
+        #profileAvatar {
+            height: 15rem;
+        }
+
+        .profileCard {
+            border-width: 0.5rem;
+            border: solid;
+            border-color: rgb(82, 122, 122);
+            border-radius: 5%;
+            height: 80vh;
+            padding-top: 5rem;
+            margin-left: 25vw;
+            background-color: rgb(194, 214, 214);
+            width: 50vw;
+        }
+
+        #avatarButton {
+            font-weight: bold;
+            height: 7vh;
+            margin-top: 3rem;
+            background-color: rgb(47, 84, 85);
+            color: white;
+            border: 0.5rem;
+            border: solid;
+            border-radius: 40%;
+        }
+
+        #passwordButton {
+            font-weight: bold;
+            height: 7vh;
+            margin-top: 3rem;
+            background-color: rgb(85, 3, 3);
+            color: white;
+            border: 0.5rem;
+            border: solid;
+            border-radius: 40%;
+        }
+    </style>
+</head>
+
+<body>
+    <div
+        class="profileCard">
+        <!-- <img id="profileAvatar" src="{{url_for('static', filename='boy1.svg')}}" alt="" srcset=""> -->
+        <img id="profileAvatar"
+            src="../static/boy1.svg"
+            alt=""
+            srcset="">
+
+        <div
+            id="emailDiv">
+            <h1>Email:
+                student@mylambton.ca
+            </h1>
+        </div>
+
+        <div
+            id="iconDiv">
+
+
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='boy1.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="{{url_for('static', filename='boy1.svg')}}"
+                    checked>
+
+            </label>
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='boy2.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="{{url_for('static', filename='boy2.svg')}}">
+
+            </label>
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='girl1.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="girl1.svg">
+
+            </label>
+            <label
+                class="container"><img
+                    class="icon"
+                    src="{{url_for('static', filename='girl2.svg')}}"
+                    alt=""
+                    srcset="">
+                <input
+                    name="avatar"
+                    type="radio"
+                    value="girl2.svg">
+
+            </label>
+        </div>
+        <button
+            id="avatarButton">Change
+            Avatar
+        </button>
+        <br>
+        <button
+            id="passwordButton">Change
+            Password</button>
+
+    </div>
+</body>
+
+</html>
