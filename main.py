@@ -99,6 +99,30 @@ def forgotPasswordNext():
             return redirect(url_for('forgotPassword'))
 
 
+@app.route('/resetPasswordNext', methods=['GET', 'POST'])  # reset password
+def resetPasswordNext():
+    if request.method == 'POST':
+        emailEntered = request.form['email']
+        passwordEntered = request.form['password']
+        confirmPasswordEntered = request.form['confirm_password']
+
+        if (emailEntered == "" or passwordEntered == "" or confirmPasswordEntered == ""):
+            flash("Please enter all fields!", 'error')
+            return redirect(url_for('forgotPassword'))
+        elif (passwordEntered != confirmPasswordEntered)
+            flash("Please enter same password in both fields", 'error')
+            return redirect(url_for('forgotPassword'))
+        elif (findUser({'email': emailEntered, "password": passwordEntered}) != {}):
+
+            updateUser(emailEntered, passwordEntered)
+            flash("Your password has been reset!", 'error')
+            return redirect(url_for('home'))
+        else:
+            flash("Something went wrong.Please try again!")
+            return redirect(url_for('resetPassword'))
+
+
+
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     print(session)
