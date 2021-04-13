@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
-from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar
+from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar, findAllUsers
 
 # if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
 # KeyError: 'email'
@@ -136,10 +136,10 @@ def chat():
         # Store the data in session
         session['username'] = username
         session['room'] = room
-        return render_template('chat.html', session=session, user=username)
+        return render_template('chat.html', session=session, user=username,room=room)
     else:
         if session.get('username') is not None:
-            return render_template('chat.html', session=session, user=session.get('username'))
+            return render_template('chat.html', session=session, user=session.get('username'),room=session.get('room'))
         else:
             return redirect(url_for('index'))  # sent to room select
 
@@ -155,7 +155,7 @@ def join(message):
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
     users.append(session.get('username'))  # for gp members list box
     emit('status',
-         {'msg': session.get('username') + ' has entered the room', 'users': users, 'user': session.get('username')},
+         {'msg': session.get('username') + ' has entered the room', 'users': users, 'user': session.get('username'), 'room':room},
          room=room)
 
 
@@ -192,7 +192,7 @@ def left(message):
     # session.clear()
 
     users.remove(message['user'])
-    emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
+    emit('status', {'msg': username + ' has left the room.', 'users': users, 'room':room}, room=room)
 
 
 @app.route('/chatHistory', methods=['GET', 'POST'])  # Check on chat history
@@ -203,7 +203,8 @@ def chatHistory():
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
     messages = list(findMessage({'chat_room': session.get('room')}))
-    return render_template('oldMessages.html', session=session, msgs=messages)
+    users = list(findAllUsers())
+    return render_template('oldMessages.html', session=session, msgs=messages, users=users)
 
 
 @app.route('/userProfile', methods=['GET', 'POST'])  # profile

@@ -19,7 +19,9 @@ def findUser(query):  #authentication
         # print(i)
     return k
 # print(findUser({'email': 'student@lambton.ca'}))
-
+def findAllUsers():
+    res = users.find()
+    return res
 def findMessage(query):
     res = messages.find(query)
     return res
@@ -36,6 +38,8 @@ def updateUser(emailEntered,passwordEntered):
 def updateUserAvatar(emailEntered,icon):
     users.update({'email':emailEntered},{"$set": {"icon": icon}})
     
-icon = findUser({'email': "student4@lambton.ca"})['icon']
-print("before icon print---------------------------")
-print(icon)
+# icon = findUser({'email': "student4@lambton.ca"})['icon']
+# print("before icon print---------------------------")
+# print(icon)
+
+# messages.delete_many( { } );

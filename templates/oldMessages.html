@@ -1,42 +1,126 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta
+        charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta
+        http-equiv="X-UA-Compatible"
+        content="ie=edge">
+    <title>Document
+    </title>
     <script
-            type="text/javascript"
-            src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+        type="text/javascript"
+        src="//code.jquery.com/jquery-1.4.2.min.js"></script>
     <style>
-        #chatHistory{
-            background-color : grey;
-            padding : 5rem;
-            border : 1rem black;
+        * {
+            background-color: rgb(167, 234, 255);
         }
-        #msgList{
-            list-style : none;
-            font-weight : bold;
-            color : red;
+        #h1ChatHistory{
+            text-align: center;
+            color: rgb(77, 62, 24);
+            background-color: wheat;
+            /* width: 30vw; */
+            
+        }
+
+        #chatHistory {
+            background-color: grey;
+            padding: 5rem;
+            border: 1rem black;
+            height: 60vh;
+            overflow: scroll;
+            margin: 4rem;
+        }
+
+        #msgList {
+            list-style: none;
+            font-weight: bold;
+            color: red;
+        }
+
+        .singleMsg {
+            /* display: flex; */
+            background-color: aquamarine;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 10%;
+        }
+
+        .nameMsg {
+            display: flex;
+            background-color: aquamarine;
+
+        }
+
+        .name {
+            font-weight: bolder;
+            font-size: 1.2rem;
+            background-color: aquamarine;
+
+        }
+
+        .date {
+            float: right;
+            margin-right: 4rem;
+            background-color: rgb(110, 0, 0);
+            color: white;
+            padding: .2rem;
+            border-radius: 30%;
+        }
+
+        .msg {
+            font-weight: bold;
+            background-color: aquamarine;
+
+
+            margin-left: 3rem;
         }
     </style>
 
-    <script>
 
-
-
-    </script>
 </head>
+
 <body>
 
-    <h2>CHAT HISTORY</h2>
-    <div id="chatHistory">
-        {% for msg in msgs %}
-        <ul id="msgList">
-        <li>{{ msg.username }}{{ msg.date }} : {{ msg.message }}</li>
-        </ul>
+    <h1 id="h1ChatHistory">CHAT HISTORY
+    </h1>
+    <div
+        id="chatHistory">
+        {% for msg
+        in msgs %}
+        <div
+            class="singleMsg">
+            <p
+                class="date">
+                {{
+                msg.date
+                }}
+            </p>
+            <div
+                class="nameMsg">
+
+                <p
+                    class="name">
+                    {{
+                    msg.username
+                    }}
+                    :
+                </p>
+                <p
+                    class="msg">
+                    {{
+                    msg.
+                    message
+                    }}
+                </p>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </body>
+
 </html>

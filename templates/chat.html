@@ -35,8 +35,10 @@
       var socket;
       var pgUser;
       var user;
+      var room;
       $(document).ready(function () {
         user = ("{{user}}")
+        room = ("{{room}}")
         socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
         socket.on('connect', function () {
           socket.emit('join', {});
@@ -52,11 +54,14 @@
           //pgUser = data.user;
           console.log(data.users);
           users = data.users;
-          document.getElementById("userList").innerHTML = "";
-          for (let i = 0; i < users.length; i++) {
-            let li = document.createElement("LI");
-            li.innerHTML = users[i];
-            document.getElementById("userList").appendChild(li);
+          console.log(room,"==",data.room)
+          if (room == data.room) {
+            document.getElementById("userList").innerHTML = "";
+            for (let i = 0; i < users.length; i++) {
+              let li = document.createElement("LI");
+              li.innerHTML = users[i];
+              document.getElementById("userList").appendChild(li);
+            }
           }
 
 
@@ -67,13 +72,13 @@
           //     }
           var msg = "";
           var msgLines = 0;
-          for(let i = 0;i<data.msg.length;i++){
-            if(i % 23 == 0 && i != 0){
+          for (let i = 0; i < data.msg.length; i++) {
+            if (i % 23 == 0 && i != 0) {
               msg += "\n";
               msgLines++;
             }
-            
-            msg+=data.msg.charAt(i);
+
+            msg += data.msg.charAt(i);
           }
           var icon = data.icon;
           console.log(icon)
@@ -151,11 +156,11 @@
           $('#chat').append(br);
           $('#chat').append(br2);
           $('#chat').append(br3);
-          for(let i = 0; i < msgLines;i++){
-             var br4 = document.createElement("br");
-             $('#chat').append(br4);
+          for (let i = 0; i < msgLines; i++) {
+            var br4 = document.createElement("br");
+            $('#chat').append(br4);
           }
-          
+
 
 
 
