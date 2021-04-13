@@ -39,7 +39,7 @@
             border: solid;
             border-color: rgb(82, 122, 122);
             border-radius: 5%;
-            height: 80vh;
+            height: 84vh;
             padding-top: 5rem;
             margin-left: 25vw;
             background-color: rgb(194, 214, 214);
@@ -60,7 +60,7 @@
         #passwordButton {
             font-weight: bold;
             height: 7vh;
-            margin-top: 3rem;
+            margin-top: 1rem;
             background-color: rgb(85, 3, 3);
             color: white;
             border: 0.5rem;
@@ -68,88 +68,140 @@
             border-radius: 40%;
         }
     </style>
+
 </head>
 
 <body>
     <div
         class="profileCard">
+
         <!-- <img id="profileAvatar" src="{{url_for('static', filename='boy1.svg')}}" alt="" srcset=""> -->
-        <img id="profileAvatar"
-            src="../static/boy1.svg"
-            alt=""
-            srcset="">
+        <div
+            id="avatarDiv">
+
+
+
+        </div>
+
 
         <div
             id="emailDiv">
-            <h1>Email:
-                student@mylambton.ca
+            <h1
+                id="userH1">
             </h1>
         </div>
-
-        <div
-            id="iconDiv">
-
-
-            <label
-                class="container"><img
-                    class="icon"
-                    src="{{url_for('static', filename='boy1.svg')}}"
-                    alt=""
-                    srcset="">
-                <input
-                    name="avatar"
-                    type="radio"
-                    value="{{url_for('static', filename='boy1.svg')}}"
-                    checked>
-
-            </label>
-            <label
-                class="container"><img
-                    class="icon"
-                    src="{{url_for('static', filename='boy2.svg')}}"
-                    alt=""
-                    srcset="">
-                <input
-                    name="avatar"
-                    type="radio"
-                    value="{{url_for('static', filename='boy2.svg')}}">
-
-            </label>
-            <label
-                class="container"><img
-                    class="icon"
-                    src="{{url_for('static', filename='girl1.svg')}}"
-                    alt=""
-                    srcset="">
-                <input
-                    name="avatar"
-                    type="radio"
-                    value="girl1.svg">
-
-            </label>
-            <label
-                class="container"><img
-                    class="icon"
-                    src="{{url_for('static', filename='girl2.svg')}}"
-                    alt=""
-                    srcset="">
-                <input
-                    name="avatar"
-                    type="radio"
-                    value="girl2.svg">
-
-            </label>
-        </div>
-        <button
-            id="avatarButton">Change
+        <h2>Change
             Avatar
-        </button>
+        </h2>
+
+        <form
+            action="{{url_for('avatarChangeFromProfile')}}"
+            method="POST">
+            <input
+                type="username"
+                name="userName"
+                placeholder="{{userName}}"
+                value="{{userName}}"
+                readonly
+                hidden>
+            <div
+                id="iconDiv">
+
+
+                <label
+                    class="container"><img
+                        class="icon"
+                        src="{{url_for('static', filename='boy1.svg')}}"
+                        alt=""
+                        srcset="">
+                    <input
+                        name="avatar"
+                        type="radio"
+                        value="{{url_for('static', filename='boy1.svg')}}"
+                        checked>
+
+                </label>
+                <label
+                    class="container"><img
+                        class="icon"
+                        src="{{url_for('static', filename='boy2.svg')}}"
+                        alt=""
+                        srcset="">
+                    <input
+                        name="avatar"
+                        type="radio"
+                        value="{{url_for('static', filename='boy2.svg')}}">
+
+                </label>
+                <label
+                    class="container"><img
+                        class="icon"
+                        src="{{url_for('static', filename='girl1.svg')}}"
+                        alt=""
+                        srcset="">
+                    <input
+                        name="avatar"
+                        type="radio"
+                        value="girl1.svg">
+
+                </label>
+                <label
+                    class="container"><img
+                        class="icon"
+                        src="{{url_for('static', filename='girl2.svg')}}"
+                        alt=""
+                        srcset="">
+                    <input
+                        name="avatar"
+                        type="radio"
+                        value="girl2.svg">
+
+                </label>
+            </div>
+
+
+            <button
+                id="avatarButton">Change
+                Avatar
+            </button>
+        </form>
         <br>
-        <button
-            id="passwordButton">Change
-            Password</button>
+        <form
+            action="{{url_for('forgotPassword')}}" method="POST">
+            <button
+                id="passwordButton">Change
+                Password</button>
+        </form>
 
     </div>
 </body>
+<script>
+    console.log("{{username}}")
+    var icon = ("{{icon}}");
+    console.log(icon)
+    var imgSrc;
+    if (icon == "boy1.svg") {
+        imgSrc = "{{url_for('static', filename='boy1.svg')}}";
+    } else if (icon == "boy2.svg") {
+
+        imgSrc = "{{url_for('static', filename='boy2.svg')}}";
+    }
+    else if (icon == "girl1.svg") {
+
+        imgSrc = "{{url_for('static', filename='girl1.svg')}}";
+    }
+    else {
+
+        imgSrc = "{{url_for('static', filename='girl2.svg')}}";
+    }
+    var avatarDiv = document.getElementById("avatarDiv");
+    var img = document.createElement("img");
+    img.src = imgSrc;
+    img.id = "profileAvatar";
+    var userNameStr = "{{username}}"
+    var h1Node = document.createTextNode(userNameStr)
+    document.getElementById("userH1").appendChild(h1Node);
+    avatarDiv.appendChild(img);
+</script>
 
 </html>

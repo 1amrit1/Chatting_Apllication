@@ -28,11 +28,13 @@ def insertUser(newUser):
 def insertMessage(newMessage):
     messages.insert_one(newMessage)
 
-
 def updateUser(emailEntered,passwordEntered):
     emailObj = {"email": emailEntered}
     passwordObj = {"$set": {"password": passwordEntered}}
     users.update(emailObj,passwordObj)
+
+def updateUserAvatar(emailEntered,icon):
+    users.update({'email':emailEntered},{"$set": {"icon": icon}})
     
 icon = findUser({'email': "student4@lambton.ca"})['icon']
 print("before icon print---------------------------")
