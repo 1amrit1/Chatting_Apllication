@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
-from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser
+from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar
 
 # if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
 # KeyError: 'email'
@@ -219,6 +219,20 @@ def userProfile():
             return render_template('profile.html',username=session.get('username'),icon=icon)
         else:
             return redirect(url_for('index'))  # sent to room select
+
+
+@app.route('/avatarChangeFromProfile', methods=['GET', 'POST'])
+def avatarChangeFromProfile():
+    if request.method == 'POST':
+        icon = request.form['avatar']
+        username = request.form['userName']
+        updateUserAvatar(username,icon)
+        flash("Avatar Changed Successfully!", 'error')
+        return redirect(url_for('index'))
+    else:
+        return redirect(url_for('index'))
+
+
 
 
 if __name__ == '__main__':
