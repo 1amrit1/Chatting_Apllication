@@ -4,10 +4,10 @@ from flask_session import Session
 from datetime import datetime
 from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser
 
-#if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
+# if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
 # KeyError: 'email'
 
-#gp member
+# gp member
 
 # session
 users = []
@@ -15,12 +15,12 @@ app = Flask(__name__)
 # mongoDB connection##########################################################################
 
 app.debug = True
-app.config['SECRET_KEY'] = 'secret'#p.t.r
+app.config['SECRET_KEY'] = 'secret'  # p.t.r
 app.config['SESSION_TYPE'] = 'filesystem'
 
 Session(app)
 
-socketio = SocketIO(app, manage_session=False)#false since we will be using our own session (from flask)
+socketio = SocketIO(app, manage_session=False)  # false since we will be using our own session (from flask)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -28,20 +28,20 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/signUp', methods=['GET', 'POST'])        # Sign In Page
+@app.route('/signUp', methods=['GET', 'POST'])  # Sign In Page
 def signUp():
     return render_template('signUp.html')
 
 
-@app.route('/roomSelect', methods=['GET', 'POST'])      # Room Selection for Chat
+@app.route('/roomSelect', methods=['GET', 'POST'])  # Room Selection for Chat
 def index():
     if request.method == 'POST':
-        emailEntered = request.form['email']#{'email':'student@lambton.ca'}
+        emailEntered = request.form['email']  # {'email':'student@lambton.ca'}
         passwordEntered = request.form['password']
         userInDb = findUser({'email': emailEntered})
 
         if emailEntered == userInDb['email'] and passwordEntered == userInDb['password']:
-            return render_template('index.html',userName=  emailEntered)#index is room select page
+            return render_template('index.html', userName=emailEntered)  # index is room select page
         else:
             flash("wrong email or password", 'error')
             return redirect(url_for('home'))
@@ -51,7 +51,7 @@ def index():
         return redirect(url_for('home'))
 
 
-@app.route('/signUpNext', methods=['GET', 'POST'])       # Sign Up 
+@app.route('/signUpNext', methods=['GET', 'POST'])  # Sign Up
 def signUpNext():
     if request.method == 'POST':
         emailEntered = request.form['email']
@@ -72,17 +72,17 @@ def signUpNext():
             return redirect(url_for('signUp'))
         else:
             userObj = {"email": emailEntered, "password": passwordEntered, "security_question": securityQuestionEntered,
-                       "security_answer": securityAnswerEntered, "icon" : icon}
+                       "security_answer": securityAnswerEntered, "icon": icon}
             insertUser(userObj)
             flash("Your Id Has been Created. Welcome!", 'error')
             return redirect(url_for('home'))
 
     else:
 
-        return redirect(url_for('home'))#sent to home page
+        return redirect(url_for('home'))  # sent to home page
 
 
-@app.route('/forgotPasswordNext', methods=['GET', 'POST'])       # forget password
+@app.route('/forgotPasswordNext', methods=['GET', 'POST'])  # forget password
 def forgotPasswordNext():
     if request.method == 'POST':
         emailEntered = request.form['email']
@@ -92,7 +92,8 @@ def forgotPasswordNext():
         if (emailEntered == "" or securityQuestionEntered == "" or securityAnswerEntered == ""):
             flash("Please enter all fields!", 'error')
             return redirect(url_for('forgotPassword'))
-        elif (findUser({'email': emailEntered,"security_question":securityQuestionEntered,"security_answer":securityAnswerEntered}) != {}):
+        elif (findUser({'email': emailEntered, "security_question": securityQuestionEntered,
+                        "security_answer": securityAnswerEntered}) != {}):
             flash("Your password will be reset!", 'error')
             return redirect(url_for('resetPassword'))
         else:
@@ -122,7 +123,6 @@ def resetPasswordNext():
             return redirect(url_for('resetPassword'))
 
 
-
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     print(session)
@@ -138,48 +138,50 @@ def chat():
         if session.get('username') is not None:
             return render_template('chat.html', session=session, user=session.get('username'))
         else:
-            return redirect(url_for('index'))#sent to room select
+            return redirect(url_for('index'))  # sent to room select
 
 
-@socketio.on('join', namespace='/chat')#listen
+@socketio.on('join', namespace='/chat')  # listen
 def join(message):
     room = session.get('room')
-    join_room(room)#join_room -> flask_socketio
+    join_room(room)  # join_room -> flask_socketio
     dt = datetime.now()
     date = (dt.strftime("%x"))
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    users.append(session.get('username'))#for gp members list box
-    emit('status', {'msg': session.get('username') + ' has entered the room' , 'users': users,'user' : session.get('username')}, room=room)
+    users.append(session.get('username'))  # for gp members list box
+    emit('status',
+         {'msg': session.get('username') + ' has entered the room', 'users': users, 'user': session.get('username')},
+         room=room)
 
 
-@socketio.on('text', namespace='/chat')      # Start chatting
+@socketio.on('text', namespace='/chat')  # Start chatting
 def text(message):
     room = session.get('room')
     dt = datetime.now()
-    date = (dt.strftime("%d"))+"-"+(dt.strftime("%b"))
-    time = (dt.strftime("%H"))+":"+(dt.strftime("%M"))
-    dtString = time+" , "+date
+    date = (dt.strftime("%d")) + "-" + (dt.strftime("%b"))
+    time = (dt.strftime("%H")) + ":" + (dt.strftime("%M"))
+    dtString = time + " , " + date
     print(dtString)
     if (message['msg'] == ""):
         return
     msg = session.get('username') + dtString + ' : ' + message['msg']
 
-    msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'],'date': dtString}
-    email = message['user']+"@lambton.ca";
+    msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'], 'date': dtString}
+    email = message['user'] + "@lambton.ca";
     print(email)
     icon = findUser({'email': email})['icon']
     print("before icon print---------------------------")
     print(icon)
 
     emit('message',
-         {'msg':  message['msg'],'user': message['user'],'date' : dtString ,'icon' : icon},
+         {'msg': message['msg'], 'user': message['user'], 'date': dtString, 'icon': icon},
          room=room)
     insertMessage(msgObj)
 
 
-@socketio.on('left', namespace='/chat')     # On leaving chat room
+@socketio.on('left', namespace='/chat')  # On leaving chat room
 def left(message):
     room = session.get('room')
     username = session.get('username')
@@ -189,19 +191,30 @@ def left(message):
     users.remove(message['user'])
     emit('status', {'msg': username + ' has left the room.', 'users': users}, room=room)
 
-@app.route('/chatHistory', methods=['GET', 'POST'])    # Check on chat history
+
+@app.route('/chatHistory', methods=['GET', 'POST'])  # Check on chat history
 def chatHistory():
     dt = datetime.now()
     date = (dt.strftime("%x"))
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    messages = list(findMessage({'chat_room' :session.get('room') }))
-    return render_template('oldMessages.html', session=session,msgs = messages)
+    messages = list(findMessage({'chat_room': session.get('room')}))
+    return render_template('oldMessages.html', session=session, msgs=messages)
 
-@app.route('/userProfile', methods=['GET', 'POST'])       # profile
+
+@app.route('/userProfile', methods=['GET', 'POST'])  # profile
 def userProfile():
-    return render_template('profile.html')
+    if request.method == 'POST':
+        username = request.form['username'].split("@")[0]
+        return render_template('profile.html',username=username)
+
+    else:
+        if session.get('username') is not None:
+            return render_template('profile.html')
+        else:
+            return redirect(url_for('index'))  # sent to room select
+
 
 if __name__ == '__main__':
     socketio.run(app)

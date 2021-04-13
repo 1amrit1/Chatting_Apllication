@@ -78,16 +78,44 @@
             background-color : #e6fffc;
             color : #602020;
           }
+          #profileButton{
+            background-color: rgb(29, 8, 105);
+            border-radius: 40%;
+            border: solid 0.1rem aliceblue;
+            color: aliceblue;
+            /* position: fixed; */
+            margin-left: 60vw;
+            height: 7vh;
+            width: 7vw;
+            
+            margin-top: 1vh;
+          }
     </style>
 </head>
 <body>
 <main class="items">
     <div class="container">
+      <form
+        action="{{url_for('userProfile')}}">
+        <input
+          type="username"
+          name="username"
+          placeholder="{{userName}}"
+          value="{{userName}}"
+          readonly hidden>
+        <button
+          id="profileButton"
+          value="submit"> Profile
+      
+        </button>
+      </form>
         <div class="chat-login">
             <div class="chat-body" style="text-align:center;">
+              
                 <div class="logo"><h3 class="glow">WeChat</h3></div>
                 <p class="login">Choose Room and Start Chat</p>
                 <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
+                  
                     <div class="form1">
                         <label for="username" class="sr-only" >User Name</label>
                         <input type="username" name="username" id="username" class="form-control"
