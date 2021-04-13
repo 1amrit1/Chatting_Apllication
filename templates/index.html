@@ -25,15 +25,6 @@
       text-align: center;
       animation: glow 1s ease-in-out infinite alternate;
     }
-
-      @-webkit-keyframes glow {
-      from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #00c7e6, 0 0 60px #00c7e6, 0 0 70px #e60073;
-        }
-      to {
-        text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-        }
-      }
         
     .chat-login {
       position: relative;
@@ -94,7 +85,7 @@
     <div class="container">
         <div class="chat-login">
             <div class="chat-body" style="text-align:center;">
-                <div class="logo"><h3 class="glow">Chit Chat</h3></div>
+                <div class="logo"><h3 class="glow">WeChat</h3></div>
                 <p class="login">Choose Room and Start Chat</p>
                 <form action="{{url_for('chat')}}" method="POST" style="margin:auto;">
                     <div class="form1">

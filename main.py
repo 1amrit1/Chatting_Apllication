@@ -200,5 +200,6 @@ def chatHistory():
     return render_template('oldMessages.html', session=session,msgs = messages)
 
 
+
 if __name__ == '__main__':
     socketio.run(app)
