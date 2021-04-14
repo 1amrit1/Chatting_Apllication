@@ -52,9 +52,9 @@
           // $('#chat').val($('#chat').val() + '----' + data.msg + '----\n');
           // $('#chat').scrollTop($('#chat')[0].scrollHeight);
           //pgUser = data.user;
-          console.log(data.users);
+          // console.log(data.users);
           users = data.users;
-          console.log(room,"==",data.room)
+          // console.log(room,"==",data.room)
           // if (room == data.room) {
             document.getElementById("userList").innerHTML = "";
             for (let i = 0; i < users[room].length; i++) {
@@ -100,7 +100,7 @@
 
           // console.log(icon);
           // console.log(iconSrc);
-          console.log(imgSrc)
+          // console.log(imgSrc)<p></p>
           var para = document.createElement("p");
           var node = document.createTextNode(msg);
           var img = document.createElement("img");

@@ -14,6 +14,7 @@ def findUser(query):  #authentication
     res = users.find(query)
     # print(res)
     k = {}
+    # k = res[0]
     for i in res:
         k = i
         # print(i)

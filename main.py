@@ -30,14 +30,14 @@ app.debug = True
 app.config['SECRET_KEY'] = 'secret'  # p.t.r
 app.config['SESSION_TYPE'] = 'filesystem'
 
-Session(app)
+Session(app)#session is being used in flask onject called app.... and that is where the server will be running
 
 socketio = SocketIO(app, manage_session=False)  # false since we will be using our own session (from flask)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('home.html')
+    return render_template('home.html')#the templates are brought from a folder named templates
 
 
 @app.route('/privacyPolicy', methods=['GET', 'POST'])
@@ -120,6 +120,8 @@ def forgotPasswordNext():
             return render_template('resetPassword.html')
         else:
             return redirect(url_for('forgotPassword'))
+    else:
+        return redirect(url_for('forgotPassword'))
 
 
 @app.route('/resetPasswordNext', methods=['GET', 'POST'])  # reset password
@@ -151,7 +153,8 @@ def chat():
     print(session)
 
     if request.method == 'POST':
-        username = request.form['username'].split("@")[0]
+        username = request.form['username'].split("@")[0]# split creates array from the string. by dividing at the mentioned element
+        #["student","lambton.ca"]
         room = request.form['room']
         # Store the data in session
         session['username'] = username
@@ -188,17 +191,17 @@ def text(message):
     date = (dt.strftime("%d")) + "-" + (dt.strftime("%b"))
     time = (dt.strftime("%H")) + ":" + (dt.strftime("%M"))
     dtString = time + " , " + date
-    print(dtString)
+    # print(dtString)
     if (message['msg'] == ""):
         return
-    msg = session.get('username') + dtString + ' : ' + message['msg']
+    # msg = session.get('username') + dtString + ' : ' + message['msg']
 
     msgObj = {'chat_room': room, 'message': message['msg'], 'username': message['user'], 'date': dtString}
     email = message['user'] + "@lambton.ca";
-    print(email)
+    # print(email)
     icon = findUser({'email': email})['icon']
-    print("before icon print---------------------------")
-    print(icon)
+    # print("before icon print---------------------------")
+    # print(icon)
 
     emit('message',
          {'msg': message['msg'], 'user': message['user'], 'date': dtString, 'icon': icon},
