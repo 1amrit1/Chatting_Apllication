@@ -37,6 +37,7 @@ def updateUser(emailEntered,passwordEntered):
     users.update(emailObj,passwordObj)
 
 def updateUserAvatar(emailEntered,icon):
+    print("in db:",emailEntered,":",icon)
     users.update({'email':emailEntered},{"$set": {"icon": icon}})
     
 # icon = findUser({'email': "student4@lambton.ca"})['icon']

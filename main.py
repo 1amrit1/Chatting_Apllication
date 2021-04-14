@@ -257,7 +257,9 @@ def userProfile():
 def avatarChangeFromProfile():
     if request.method == 'POST':
         icon = request.form['avatar']
+        print(icon)
         username = request.form['userName']
+        print(username)
         updateUserAvatar(username, icon)
         flash("Avatar Changed Successfully!", 'error')
         return redirect(url_for('index'))
