@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
-from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar, \
-    findAllUsers
+from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar, findAllUsers
 
 # if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
 # KeyError: 'email'
@@ -11,7 +10,7 @@ from dataBaseConnection import findUser, findMessage, insertUser, insertMessage,
 # gp member
 
 # session
-users = []
+# users = []
 userDict = {
     "CSAT": [],
     "LAMBTON": [],
@@ -213,6 +212,7 @@ def left(message):
     username = session.get('username')
     leave_room(room)
     # session.clear()
+    session.pop(username, None)
     # print(userDict)
     # print(userDict[message['room']])
     userDict[message['room']].remove(message['user'])
