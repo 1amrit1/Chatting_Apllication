@@ -57,9 +57,9 @@
           console.log(room,"==",data.room)
           // if (room == data.room) {
             document.getElementById("userList").innerHTML = "";
-            for (let i = 0; i < users.length; i++) {
+            for (let i = 0; i < users[room].length; i++) {
               let li = document.createElement("LI");
-              li.innerHTML = users[i];
+              li.innerHTML = users[room][i];
               document.getElementById("userList").appendChild(li);
             }
           // }
@@ -181,7 +181,7 @@
       });
 
       function leave_room() {
-        socket.emit('left', { user: user }, function () {//send.... this fn is called callback fn
+        socket.emit('left', { user: user,room:room }, function () {//send.... this fn is called callback fn
           socket.disconnect();
           // go back to the login page
           window.location.href = "{{ url_for('index') }}";
@@ -280,7 +280,7 @@
       color: rgb(3, 26, 53);
       font-weight: bolder;
       /* margin-left: 5vw; */
-      text-align: center
+      text-align: center;
       list-style: none;
       text-align: left;
       font-size: large;

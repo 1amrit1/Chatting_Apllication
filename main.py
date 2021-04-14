@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask_session import Session
 from datetime import datetime
-from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar, findAllUsers
+from dataBaseConnection import findUser, findMessage, insertUser, insertMessage, updateUser, updateUserAvatar, \
+    findAllUsers
 
 # if (emailEntered == userInDb['email'] and passwordEntered == userInDb['password']):
 # KeyError: 'email'
@@ -11,6 +12,18 @@ from dataBaseConnection import findUser, findMessage, insertUser, insertMessage,
 
 # session
 users = []
+userDict = {
+    "CSAT": [],
+    "LAMBTON": [],
+    "CANADA" : [],
+    "CODERS CLUB" : [],
+    "LEAGUE OF LEGENDS" : [],
+    "COUNTER STRIKE" : [],
+    "DOTA" : [],
+    "AGE OF EMPIRES" : [],
+    "DRAMA CLUB" : [],
+    "BASKETBALL TEAM" : []
+}
 app = Flask(__name__)
 # mongoDB connection##########################################################################
 
@@ -27,10 +40,10 @@ socketio = SocketIO(app, manage_session=False)  # false since we will be using o
 def home():
     return render_template('home.html')
 
+
 @app.route('/privacyPolicy', methods=['GET', 'POST'])
 def privacyPolicy():
     return render_template('privatePolicy.html')
-
 
 
 @app.route('/signUp', methods=['GET', 'POST'])  # Sign In Page
@@ -86,9 +99,12 @@ def signUpNext():
 
         return redirect(url_for('home'))  # sent to home page
 
+
 @app.route('/forgotPassword', methods=['GET', 'POST'])  # forget password
 def forgotPassword():
     return render_template('forgotPassword.html')
+
+
 @app.route('/forgotPasswordNext', methods=['GET', 'POST'])  # forget password
 def forgotPasswordNext():
     if request.method == 'POST':
@@ -127,8 +143,8 @@ def resetPasswordNext():
         else:
             flash("Something went wrong.Please try again!")
             return redirect(url_for('resetPassword'))
-    else:   return redirect(url_for('forgotPassword'))
-
+    else:
+        return redirect(url_for('forgotPassword'))
 
 
 @app.route('/chat', methods=['GET', 'POST'])
@@ -141,10 +157,10 @@ def chat():
         # Store the data in session
         session['username'] = username
         session['room'] = room
-        return render_template('chat.html', session=session, user=username,room=room)
+        return render_template('chat.html', session=session, user=username, room=room)
     else:
         if session.get('username') is not None:
-            return render_template('chat.html', session=session, user=session.get('username'),room=session.get('room'))
+            return render_template('chat.html', session=session, user=session.get('username'), room=session.get('room'))
         else:
             return redirect(url_for('index'))  # sent to room select
 
@@ -158,9 +174,11 @@ def join(message):
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    users.append(session.get('username'))  # for gp members list box
+    # users.append(session.get('username'))  # for gp members list box
+    userDict[room].append(session.get('username'));
     emit('status',
-         {'msg': session.get('username') + ' has entered the room', 'users': users, 'user': session.get('username'), 'room':room},
+         {'msg': session.get('username') + ' has entered the room', 'users': userDict, 'user': session.get('username'),
+          'room': room},
          room=room)
 
 
@@ -195,9 +213,11 @@ def left(message):
     username = session.get('username')
     leave_room(room)
     # session.clear()
-
-    users.remove(message['user'])
-    emit('status', {'msg': username + ' has left the room.', 'users': users, 'room':room}, room=room)
+    # print(userDict)
+    # print(userDict[message['room']])
+    userDict[message['room']].remove(message['user'])
+    # users.remove(message['user'])
+    emit('status', {'msg': username + ' has left the room.', 'users': userDict, 'room': room}, room=room)
 
 
 @app.route('/chatHistory', methods=['GET', 'POST'])  # Check on chat history
@@ -219,13 +239,13 @@ def userProfile():
         icon = findUser({'email': username})['icon']
         print(username)
 
-        return render_template('profile.html',username=username,icon=icon)
+        return render_template('profile.html', username=username, icon=icon)
 
     else:
         if session.get('username') is not None:
             username = session.get('username')
             icon = findUser({'email': username})['icon']
-            return render_template('profile.html',username=session.get('username'),icon=icon)
+            return render_template('profile.html', username=session.get('username'), icon=icon)
         else:
             return redirect(url_for('index'))  # sent to room select
 
@@ -235,13 +255,11 @@ def avatarChangeFromProfile():
     if request.method == 'POST':
         icon = request.form['avatar']
         username = request.form['userName']
-        updateUserAvatar(username,icon)
+        updateUserAvatar(username, icon)
         flash("Avatar Changed Successfully!", 'error')
         return redirect(url_for('index'))
     else:
         return redirect(url_for('index'))
-
-
 
 
 if __name__ == '__main__':
