@@ -27,6 +27,11 @@ socketio = SocketIO(app, manage_session=False)  # false since we will be using o
 def home():
     return render_template('home.html')
 
+@app.route('/privacyPolicy', methods=['GET', 'POST'])
+def privacyPolicy():
+    return render_template('privatePolicy.html')
+
+
 
 @app.route('/signUp', methods=['GET', 'POST'])  # Sign In Page
 def signUp():
@@ -153,7 +158,7 @@ def join(message):
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    users.append(session.get('username'))  # for gp members list box
+    users.append(session.get('username')+" ("+room+")")  # for gp members list box
     emit('status',
          {'msg': session.get('username') + ' has entered the room', 'users': users, 'user': session.get('username'), 'room':room},
          room=room)
@@ -191,7 +196,7 @@ def left(message):
     leave_room(room)
     # session.clear()
 
-    users.remove(message['user'])
+    users.remove(message['user']+" ("+room+")")
     emit('status', {'msg': username + ' has left the room.', 'users': users, 'room':room}, room=room)
 
 
