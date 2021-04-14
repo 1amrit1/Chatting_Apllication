@@ -55,14 +55,14 @@
           console.log(data.users);
           users = data.users;
           console.log(room,"==",data.room)
-          if (room == data.room) {
+          // if (room == data.room) {
             document.getElementById("userList").innerHTML = "";
             for (let i = 0; i < users.length; i++) {
               let li = document.createElement("LI");
               li.innerHTML = users[i];
               document.getElementById("userList").appendChild(li);
             }
-          }
+          // }
 
 
         });

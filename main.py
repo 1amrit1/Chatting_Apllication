@@ -158,7 +158,7 @@ def join(message):
     hr = (dt.strftime("%H"))
     min = (dt.strftime("%M"))
     dtString = "[ " + date + " -> " + hr + " : " + min + " ]"
-    users.append(session.get('username')+" ("+room+")")  # for gp members list box
+    users.append(session.get('username'))  # for gp members list box
     emit('status',
          {'msg': session.get('username') + ' has entered the room', 'users': users, 'user': session.get('username'), 'room':room},
          room=room)
@@ -196,7 +196,7 @@ def left(message):
     leave_room(room)
     # session.clear()
 
-    users.remove(message['user']+" ("+room+")")
+    users.remove(message['user'])
     emit('status', {'msg': username + ' has left the room.', 'users': users, 'room':room}, room=room)
 
 
